@@ -47,13 +47,13 @@ public:
 
     SortingAlgorithm sortingAlgorithm();
     void setSortingAlgorithm(SortingAlgorithm);
-    int size() const { return mBarHeights.size(); }
+    int size() const;
     void setSize(int);
-    int count() const { return mBarHeights.count(); }
-    bool sorting() const { return mSorting; }
-    bool sorted() const { return mSorted; }
+    int count() const;
+    bool sorting() const;
+    bool sorted() const;
     void setSorted(bool sorted);
-    int operationCount() const { return mOperationCount; }
+    int operationCount() const;
     int operationInterval() const;
     void setOperationInterval(int operationInterval);
 

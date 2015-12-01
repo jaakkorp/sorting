@@ -90,6 +90,35 @@ void SortBoxModel::setSortingAlgorithm(SortBoxModel::SortingAlgorithm sortingAlg
     }
 }
 
+int SortBoxModel::size() const
+{
+    return mBarHeights.size();
+}
+
+void SortBoxModel::setSize(int size)
+{
+    if (size > 0 && size != mBarHeights.size()) {
+        mSize = size;
+        repopulate();
+        emit sizeChanged();
+    }
+}
+
+int SortBoxModel::count() const
+{
+    return mBarHeights.count();
+}
+
+bool SortBoxModel::sorting() const
+{
+    return mSorting;
+}
+
+bool SortBoxModel::sorted() const
+{
+    return mSorted;
+}
+
 void SortBoxModel::setSorted(bool sorted)
 {
     if (sorted || !mSorted || mSorting)
@@ -99,14 +128,9 @@ void SortBoxModel::setSorted(bool sorted)
     emit sortedChanged();
 }
 
-
-void SortBoxModel::setSize(int size)
+int SortBoxModel::operationCount() const
 {
-    if (size > 0 && size != mBarHeights.size()) {
-        mSize = size;
-        repopulate();
-        emit sizeChanged();
-    }
+    return mOperationCount;
 }
 
 int SortBoxModel::operationInterval() const
