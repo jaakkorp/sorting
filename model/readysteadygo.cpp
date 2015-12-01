@@ -6,7 +6,9 @@
 
 const qint64 KCountDownInterval = 1000;
 
-ReadySteadyGo::ReadySteadyGo(QObject *parent) : QObject(parent)
+ReadySteadyGo::ReadySteadyGo(QObject *parent)
+    : QObject(parent)
+    , mRunning(false)
 {
 }
 
