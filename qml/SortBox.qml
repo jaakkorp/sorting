@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import Qt.labs.sortboxmodel 1.0
 
 Rectangle {

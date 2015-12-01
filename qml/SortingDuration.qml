@@ -15,7 +15,7 @@ This material also contains confidential information which may
 not be disclosed to others without the prior written consent
 of Nokia.*/
 
-import QtQuick 2.0
+import QtQuick 2.5
 
 Rectangle {
     id: root

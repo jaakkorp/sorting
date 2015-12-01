@@ -1,7 +1,7 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import Qt.labs.sortboxmodel 1.0
-import QtQuick.Controls 1.0
-import QtQuick.Window 2.1
+import QtQuick.Controls 1.4
+import QtQuick.Window 2.2
 
 ApplicationWindow {
     id: root
