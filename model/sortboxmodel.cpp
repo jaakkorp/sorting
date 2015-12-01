@@ -15,6 +15,7 @@ const float KLastBarHeightRatio = 0.95f;
 SortBoxModel::SortBoxModel(QObject *parent)
     : QAbstractListModel(parent)
     , mSize(12)
+    , mSorting(false)
     , mSorted(false)
 {
     qRegisterMetaType<SortEngine*>("SortEngine*");
