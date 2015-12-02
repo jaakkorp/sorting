@@ -25,9 +25,8 @@ ApplicationWindow {
                 columns: Math.ceil(Math.sqrt(sorterModel.count))
                 rows: Math.ceil(Math.sqrt(sorterModel.count))
                 spacing: 30
-                property int itemHeight: itemWidth * root.height / root.width
-                property int itemWidth: sorterModel.count === 1 ? root.width / 2
-                                                                : root.width / columns - spacing / (columns - 1) - 40
+                property int itemHeight: 324
+                property int itemWidth: 576
 
                 add: Transition {
                     NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 500 }
