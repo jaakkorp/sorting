@@ -1,8 +1,9 @@
 import QtQuick 2.5
 import Qt.labs.sortboxmodel 1.0
 import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.2
 
-Rectangle {
+Item {
     id: root
 
     signal closed
@@ -28,18 +29,19 @@ Rectangle {
         property bool needResult
     }
 
-    Column {
+    ColumnLayout {
         id: column
         spacing: 10
-        anchors.margins: 5
+        anchors.fill: parent
 
-        Row {
-            width: sortBox.width
-            spacing: width - comboBox.width - closeButton.width
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: column.width - comboBox.width - closeButton.width
 
             ComboBox {
                 id: comboBox
-                width: root.width / 2
+                Layout.minimumWidth: root.width / 2
+                Layout.minimumHeight: comboBox.implicitHeight
                 currentIndex: root.sortingAlgorithm
                 onCurrentIndexChanged: root.sortingAlgorithm = currentIndex
                 enabled: !sortBox.sorting && !readySteadyGo.running
@@ -56,8 +58,9 @@ Rectangle {
 
             CloseButton {
                 id: closeButton
-                height: comboBox.height
-                width: height
+                Layout.preferredWidth: height
+                Layout.preferredHeight: comboBox.height
+                Layout.alignment: Qt.AlignLeft
                 enabled: !sortBox.sorting
                 onClicked: root.closed()
             }
@@ -65,7 +68,8 @@ Rectangle {
 
         SortBox {
             id: sortBox
-            height: root.height * 0.8; width: root.width
+            Layout.fillWidth: true
+            Layout.fillHeight: true
             barCount: root.barCount
             sortingAlgorithm: comboBox.currentIndex
 
@@ -78,68 +82,62 @@ Rectangle {
             }
         }
 
-        Rectangle {
-            width: sortBox.width
-            color: root.color
+        RowLayout {
 
-            Component.onCompleted: height = childrenRect.height
-
-            Row {
-                id: row
-                spacing: 10
-                add: Transition {
+            spacing: 10
+            /*add: Transition {
                     NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 500 }
                     NumberAnimation { property: "scale"; from: 0; to: 1.0; easing.type: Easing.OutCirc; duration: 500 }
                 }
                 move: Transition {
                     NumberAnimation { property: "x"; easing.type: Easing.OutCirc; duration: 500 }
                     NumberAnimation { property: "y"; easing.type: Easing.OutCirc; duration: 500 }
-                }
+                }*/
 
-                Button {
-                    text: "Sort"
-                    enabled: !sortBox.sorting && !sortBox.sorted && !readySteadyGo.running
-                    onClicked: {
-                        internal.needResult = false
-                        root.result = 0
-                        sortBox.sort()
-                    }
+            Button {
+                text: "Sort"
+                enabled: !sortBox.sorting && !sortBox.sorted && !readySteadyGo.running
+                onClicked: {
+                    internal.needResult = false
+                    root.result = 0
+                    sortBox.sort()
                 }
+            }
 
-                Button {
-                    text: "Set unsorted"
-                    visible: !sortBox.sorting && !readySteadyGo.running && sortBox.sorted
-                    onClicked: {
-                        sortBox.setSortedFalse()
-                    }
+            Button {
+                text: "Set unsorted"
+                visible: !sortBox.sorting && !readySteadyGo.running && sortBox.sorted
+                onClicked: {
+                    sortBox.setSortedFalse()
                 }
+            }
 
-                Button {
-                    text: "Scramble"
-                    enabled: !sortBox.sorting && !readySteadyGo.running
-                    onClicked: sortBox.scramble()
-                }
+            Button {
+                text: "Scramble"
+                enabled: !sortBox.sorting && !readySteadyGo.running
+                onClicked: sortBox.scramble()
+            }
 
-                SortingDuration {
-                    id: sortingDuration
-                    height: root.height * 0.1 - column.spacing; width: height * 5
-                    sortBox: sortBox
-                }
+            SortingDuration {
+                id: sortingDuration
+                Layout.preferredHeight: parent.height
+                Layout.preferredWidth: Layout.preferredHeight * 5
+                sortBox: sortBox
+            }
 
-                Label {
-                    id: operationCountLabel
-                    text: sortBox.operationCount
-                }
+            Label {
+                id: operationCountLabel
+                text: sortBox.operationCount
+            }
 
-                Label {
-                    id: resultLabel
-                    text: result === 0 ? "" : result
-                }
+            Label {
+                id: resultLabel
+                text: result === 0 ? "" : result
+            }
 
-                CheckBox {
-                    id: checkBox
-                    enabled: !sortBox.sorting && !readySteadyGo.running
-                }
+            CheckBox {
+                id: checkBox
+                enabled: !sortBox.sorting && !readySteadyGo.running
             }
         }
     }
