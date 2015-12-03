@@ -1,39 +1,33 @@
 #include "raceresults.h"
-#include <QtAlgorithms>
-#include <QString>
-#include <QDebug>
 
-RaceResults::RaceResults(QObject *parent) : QObject(parent)
+RaceResults::RaceResults(QObject *parent)
+    : QObject(parent)
+    , m_result(0)
 {
-    mResult = 0;
 }
 
 void RaceResults::reset()
 {
-    mResult = 0;
-    mTimes.clear();
+    m_result = 0;
+    m_times.clear();
 }
 
 void RaceResults::addRaceTime(int raceTime)
 {
-    int index = mTimes.count() - 1;
-    while (index >= 0) {
-        if (mTimes[index] > raceTime) {
-            index--;
-            continue;
-        }
-        else
-            break;
-    }
-    mTimes.insert(index+1, raceTime);
+    auto index = m_times.count() - 1;
+
+    while (index > 0 && m_times[index] > raceTime)
+            --index;
+
+    m_times.insert(index, raceTime);
 }
 
 int RaceResults::getResult()
 {
-    return ++mResult;
+    return ++m_result;
 }
 
 int RaceResults::getResult(int raceTime)
 {
-    return mTimes.indexOf(raceTime) + 1;
+    return m_times.indexOf(raceTime) + 1;
 }

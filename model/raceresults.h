@@ -17,8 +17,8 @@ public:
     Q_INVOKABLE int getResult(int raceTime);
 
 private:
-    int mResult;
-    QList<int> mTimes;
+    int m_result;
+    QList<int> m_times;
 };
 
 #endif // RACERESULTS_H

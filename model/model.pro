@@ -33,7 +33,7 @@
 #INSTALLS += target qmldir
 
 TEMPLATE = lib
-CONFIG += plugin
+CONFIG += plugin c++14
 QT += qml quick
 
 DESTDIR = ../sortboxmodel
