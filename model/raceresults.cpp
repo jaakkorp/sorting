@@ -16,10 +16,10 @@ void RaceResults::addRaceTime(int raceTime)
 {
     auto index = m_times.count() - 1;
 
-    while (index > 0 && m_times[index] > raceTime)
+    while (index >= 0 && m_times[index] > raceTime)
             --index;
 
-    m_times.insert(index, raceTime);
+    m_times.insert(index + 1, raceTime);
 }
 
 int RaceResults::getResult()
