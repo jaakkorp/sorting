@@ -17,6 +17,9 @@ ApplicationWindow {
 
         Grid {
             id: grid
+
+            Layout.alignment: Qt.AlignHCenter
+
             columns: Math.ceil(Math.sqrt(sorterModel.count))
             rows: Math.ceil(Math.sqrt(sorterModel.count))
             spacing: 30
