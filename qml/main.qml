@@ -2,140 +2,129 @@ import QtQuick 2.5
 import Qt.labs.sortboxmodel 1.0
 import QtQuick.Controls 1.4
 import QtQuick.Window 2.2
+import QtQuick.Layouts 1.2
 
 ApplicationWindow {
     id: root
 
     Component.onCompleted: visibility = Window.Maximized
 
-    Rectangle {
-        id: container
+    ColumnLayout {
+        id: column
 
-        height: root.height
-        width: root.width
+        anchors.centerIn: parent
+        spacing: 30
 
-        Column {
-            id: column
-
-            anchors.centerIn: container
+        Grid {
+            id: grid
+            columns: Math.ceil(Math.sqrt(sorterModel.count))
+            rows: Math.ceil(Math.sqrt(sorterModel.count))
             spacing: 30
+            property int itemHeight: 324
+            property int itemWidth: 576
 
-            Grid {
-                id: grid
-                columns: Math.ceil(Math.sqrt(sorterModel.count))
-                rows: Math.ceil(Math.sqrt(sorterModel.count))
-                spacing: 30
-                property int itemHeight: 324
-                property int itemWidth: 576
+            add: Transition {
+                NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 500 }
+                NumberAnimation { property: "scale"; from: 0; to: 1.0; easing.type: Easing.OutCirc; duration: 500 }
+            }
+            move: Transition {
+                NumberAnimation { property: "x"; easing.type: Easing.OutCirc; duration: 500 }
+                NumberAnimation { property: "y"; easing.type: Easing.OutCirc; duration: 500 }
+            }
 
-                add: Transition {
-                    NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 500 }
-                    NumberAnimation { property: "scale"; from: 0; to: 1.0; easing.type: Easing.OutCirc; duration: 500 }
+            Repeater {
+                id: sorters
+                model: sorterModel
+                Sorter {
+                    id: sorter
+                    height: grid.itemHeight
+                    width: grid.itemWidth
+                    barCount: count
+                    sortingAlgorithm: algorithm
+                    onSortedChanged: if (sorted && needResult) {
+                                         sorter.result = results.getResult()
+                                         internal.sorted(sorter.sortingTime)
+                                     }
+                    onClosed: internal.deleteSorter(index)
                 }
-                move: Transition {
-                    NumberAnimation { property: "x"; easing.type: Easing.OutCirc; duration: 500 }
-                    NumberAnimation { property: "y"; easing.type: Easing.OutCirc; duration: 500 }
-                }
+            }
+        }
 
-                Repeater {
-                    id: sorters
-                    model: sorterModel
-                    Sorter {
-                        id: sorter
-                        height: grid.itemHeight
-                        width: grid.itemWidth
-                        barCount: count
-                        sortingAlgorithm: algorithm
-                        onSortedChanged: if (sorted && needResult) {
-                                             sorter.result = results.getResult()
-                                             internal.sorted(sorter.sortingTime)
-                                         }
-                        onClosed: internal.deleteSorter(index)
+        RowLayout {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 20
+
+            Button {
+                text: "Select all"
+                enabled: !internal.sorting
+                onClicked: internal.selectAll()
+            }
+
+            Button {
+                text: "Deselect all"
+                enabled: !internal.sorting
+                onClicked: internal.deselectAll()
+            }
+
+            Button {
+                text: "Sort"
+                enabled: !internal.sorting
+                onClicked: internal.sortSelected()
+            }
+
+            Button {
+                text: "Scramble"
+                enabled: !internal.sorting
+                onClicked: {
+                    for (var i = 0; i < sorters.count; i++) {
+                        if (sorters.itemAt(i).selected)
+                            sorters.itemAt(i).scramble()
                     }
                 }
             }
 
-            Rectangle {
-                width: grid.width
+            Button {
+                text: "Set reverse order"
+                enabled: !internal.sorting
+                onClicked: internal.setReverseOrder()
+            }
 
-                Component.onCompleted: height = childrenRect.height
+            Button {
+                text: "Set same order"
+                enabled: !internal.sorting
+                onClicked: internal.setRandomOrder()
+            }
 
-                Row {
-                    anchors.centerIn: parent
+            Button {
+                text: "Set sorted unsorted"
+                enabled: !internal.sorting
+                onClicked: internal.setSortedFalse()
+            }
 
-                    spacing: 20
+            Button {
+                text: "Add sorter"
+                enabled: sorterModel.count < 6
+                onClicked: internal.addSorter()
+            }
 
-                    Button {
-                        text: "Select all"
-                        enabled: !internal.sorting
-                        onClicked: internal.selectAll()
-                    }
+            ComboBox {
+                id: comboBox
 
-                    Button {
-                        text: "Deselect all"
-                        enabled: !internal.sorting
-                        onClicked: internal.deselectAll()
-                    }
+                Layout.minimumWidth: 150
 
-                    Button {
-                        text: "Sort"
-                        enabled: !internal.sorting
-                        onClicked: internal.sortSelected()
-                    }
-
-                    Button {
-                        text: "Scramble"
-                        enabled: !internal.sorting
-                        onClicked: {
-                            for (var i = 0; i < sorters.count; i++) {
-                                if (sorters.itemAt(i).selected)
-                                    sorters.itemAt(i).scramble()
-                            }
-                        }
-                    }
-
-                    Button {
-                        text: "Set reverse order"
-                        enabled: !internal.sorting
-                        onClicked: internal.setReverseOrder()
-                    }
-
-                    Button {
-                        text: "Set same order"
-                        enabled: !internal.sorting
-                        onClicked: internal.setRandomOrder()
-                    }
-
-                    Button {
-                        text: "Set sorted unsorted"
-                        enabled: !internal.sorting
-                        onClicked: internal.setSortedFalse()
-                    }
-
-                    Button {
-                        text: "Add sorter"
-                        enabled: sorterModel.count < 6
-                        onClicked: internal.addSorter()
-                    }
-
-                    ComboBox {
-                        id: comboBox
-                        width: grid.itemWidth / 4
-                        onCurrentIndexChanged: {
-                            for (var i = 0; i < sorters.count; i++)
-                                if (sorters.itemAt(i).selected)
-                                    sorters.itemAt(i).sortingAlgorithm = currentIndex
-                        }
-                        model: ListModel {
-                            ListElement { text : "Bubble sort"; }
-                            ListElement { text : "Exchange sort"; }
-                            ListElement { text : "Selection sort"; }
-                            ListElement { text : "Insertion sort"; }
-                            ListElement { text : "Shell sort"; }
-                            ListElement { text : "Merge sort"; }
-                            ListElement { text : "Quick sort"; }
-                        }
-                    }
+                onCurrentIndexChanged: {
+                    for (var i = 0; i < sorters.count; i++)
+                        if (sorters.itemAt(i).selected)
+                            sorters.itemAt(i).sortingAlgorithm = currentIndex
+                }
+                model: ListModel {
+                    ListElement { text : "Bubble sort"; }
+                    ListElement { text : "Exchange sort"; }
+                    ListElement { text : "Selection sort"; }
+                    ListElement { text : "Insertion sort"; }
+                    ListElement { text : "Shell sort"; }
+                    ListElement { text : "Merge sort"; }
+                    ListElement { text : "Quick sort"; }
                 }
             }
         }
@@ -189,12 +178,9 @@ ApplicationWindow {
 
     QtObject {
         id: internal
-        property bool componentReady: false
         property bool sorting
         property int sortingItemsCount
         property int sortedItemsCount
-
-        Component.onCompleted: componentReady = true
 
         function sortSelected() {
             reset()
