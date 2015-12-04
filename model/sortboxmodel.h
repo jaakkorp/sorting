@@ -48,7 +48,7 @@ public:
     SortingAlgorithm sortingAlgorithm();
     void setSortingAlgorithm(SortingAlgorithm);
     int size() const;
-    void setSize(int);
+    void setSize(int size);
     int count() const;
     bool sorting() const;
     bool sorted() const;
@@ -56,21 +56,19 @@ public:
     int operationCount() const;
     int operationInterval() const;
     void setOperationInterval(int operationInterval);
-
-    Q_INVOKABLE void sort();
-    Q_INVOKABLE void move(int, int);
-    Q_INVOKABLE void scramble();
-    Q_INVOKABLE QVariantList randomOrder(int);
-    Q_INVOKABLE QVariantList reverseOrder(int);
-    Q_INVOKABLE void setOrder(QVariantList);
-
-public Q_SLOTS:
-    void swap(int, int);
-    void replace(int, float);
-    void proceed();
+    void swap(int index1, int index2);
+    void replace(int itemIndex, float value);
     void listSorted();
 
-Q_SIGNALS:
+    Q_INVOKABLE void sort();
+    Q_INVOKABLE void move(int from, int to);
+    Q_INVOKABLE void scramble();
+    Q_INVOKABLE QVariantList randomOrder(int itemCount);
+    Q_INVOKABLE QVariantList reverseOrder(int itemCount);
+    Q_INVOKABLE void setOrder(QVariantList);
+    Q_INVOKABLE void proceed();
+
+signals:
     void updateReady();
     void sortingAlgorithmChanged();
     void sizeChanged();
@@ -88,15 +86,13 @@ private:
     int toSortingConstInt(SortingAlgorithm);
     SortingAlgorithm toSortingEnum(int);
 
-    SortEngineThread *mEngineThread;
-    SortEngine *mEngine;
-    //SortingAlgorithm mSortingAlgorithm;
-    int mOperationInterval;
-    int mSize;
-    bool mSorting;
-    bool mSorted;
-    int mOperationCount;
-    QList<float> mBarHeights;
+    SortEngineThread *m_engineThread;
+    SortEngine *m_engine;
+    int m_size;
+    bool m_sorting;
+    bool m_sorted;
+    int m_operationCount;
+    QList<float> m_barHeights;
 };
 
 #endif // SORTBOXMODEL_H
