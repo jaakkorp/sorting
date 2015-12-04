@@ -42,11 +42,11 @@ public:
     SortBoxModel(QObject *parent = 0);
     ~SortBoxModel();
 
-    QVariant data(const QModelIndex&, int) const;
-    int rowCount(const QModelIndex&) const;
+    QVariant data(const QModelIndex& index, int role) const;
+    int rowCount(const QModelIndex &parent) const;
 
     SortingAlgorithm sortingAlgorithm();
-    void setSortingAlgorithm(SortingAlgorithm);
+    void setSortingAlgorithm(SortingAlgorithm sortingAlgorithm);
     int size() const;
     void setSize(int size);
     int count() const;
@@ -65,7 +65,7 @@ public:
     Q_INVOKABLE void scramble();
     Q_INVOKABLE QVariantList randomOrder(int itemCount);
     Q_INVOKABLE QVariantList reverseOrder(int itemCount);
-    Q_INVOKABLE void setOrder(QVariantList);
+    Q_INVOKABLE void setOrder(const QVariantList &list);
     Q_INVOKABLE void proceed();
 
 signals:
@@ -83,8 +83,8 @@ protected:
 
 private:
     void repopulate();
-    int toSortingConstInt(SortingAlgorithm);
-    SortingAlgorithm toSortingEnum(int);
+    int toSortingConstInt(SortingAlgorithm sortingAlgorithm);
+    SortingAlgorithm toSortingEnum(int sortingAlgorithm);
 
     SortEngineThread *m_engineThread;
     SortEngine *m_engine;

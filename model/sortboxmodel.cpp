@@ -28,8 +28,8 @@ SortBoxModel::SortBoxModel(QObject *parent)
     connect(m_engine, &SortEngine::sorted, this, &SortBoxModel::listSorted);
     connect(this, &QObject::destroyed, m_engineThread, &QThread::quit);
 
-    float heightRatioIncrease = (KLastBarHeightRatio - KFirstBarHeightRatio) / (m_size - 1);
-    float barHeightRatio = KFirstBarHeightRatio;
+    auto heightRatioIncrease = (KLastBarHeightRatio - KFirstBarHeightRatio) / (m_size - 1);
+    auto barHeightRatio = KFirstBarHeightRatio;
 
     for (auto i(0); i < m_size; ++i) {
         m_barHeights.append(barHeightRatio);
@@ -219,7 +219,7 @@ QVariantList SortBoxModel::reverseOrder(int itemCount)
     return list;
 }
 
-void SortBoxModel::setOrder(QVariantList list)
+void SortBoxModel::setOrder(const QVariantList &list)
 {
     if (list.count() < 1 || sorting())
         return;
@@ -250,6 +250,15 @@ void SortBoxModel::swap(int index1, int index2)
 
 void SortBoxModel::replace(int itemIndex, float value)
 {
+    // TODO: check marge sort algorithm. Right now we are asked to replace
+    // a value with the same value and the logic depends on values changing
+    // (SortBox.qml: onMovingChanged in Bar delegate).
+    auto old = m_barHeights[itemIndex];
+    if (value == old) {
+        proceed();
+        return;
+    }
+
     m_barHeights.replace(itemIndex, value);
     ++m_operationCount;
 
@@ -289,9 +298,9 @@ void SortBoxModel::repopulate()
     emit dataChanged(index(0), index(m_barHeights.count() - 1));
 }
 
-int SortBoxModel::toSortingConstInt(SortBoxModel::SortingAlgorithm algorithm)
+int SortBoxModel::toSortingConstInt(SortBoxModel::SortingAlgorithm sortingAlgorithm)
 {
-    switch (algorithm) {
+    switch (sortingAlgorithm) {
     case SortBoxModel::BubbleSort:
         return KBubbleSort;
 
@@ -318,9 +327,9 @@ int SortBoxModel::toSortingConstInt(SortBoxModel::SortingAlgorithm algorithm)
     }
 }
 
-SortBoxModel::SortingAlgorithm SortBoxModel::toSortingEnum(int algorithm)
+SortBoxModel::SortingAlgorithm SortBoxModel::toSortingEnum(int sortingAlgorithm)
 {
-    switch (algorithm) {
+    switch (sortingAlgorithm) {
     case KBubbleSort:
         return SortBoxModel::BubbleSort;
 
