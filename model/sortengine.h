@@ -13,30 +13,29 @@ class SortEngine : public QObject
 
 public:
     explicit SortEngine();
-    ~SortEngine();
 
     void setThread(SortEngineThread *thread);
     void setList(QList<float> &list);
     int sortingAlgorithm();
-    void setSortingAlgorithm(int);
+    void setSortingAlgorithm(int sortingAlgorithm);
     int operationInterval();
-    void setOperationInterval(int);
+    void setOperationInterval(int operationInterval);
     void moveToThread(QThread *thread);
     Q_INVOKABLE void sort();
     Q_INVOKABLE void resume();
 
-Q_SIGNALS:
-    void swap(int, int);
-    void replace(int, float);
+signals:
+    void swap(int index1, int index2);
+    void replace(int index, float value);
     void sorted();
 
 private:
-    void doSwap(int, int);
-    void doReplace(int, float);
+    void doSwap(int index1, int index2);
+    void doReplace(int index, float value);
     void wait();
 
 protected:
-    SortEngineThread *mEngineThread;
+    SortEngineThread *m_engineThread;
     SortEnginePrivate *d_ptr;
 
 private:

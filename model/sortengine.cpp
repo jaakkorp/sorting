@@ -10,13 +10,9 @@ SortEngine::SortEngine()
 {
 }
 
-SortEngine::~SortEngine()
-{
-}
-
 void SortEngine::moveToThread(QThread *thread)
 {
-    mEngineThread = qobject_cast<SortEngineThread*>(thread);
+    m_engineThread = qobject_cast<SortEngineThread*>(thread);
     QObject::moveToThread(thread);
 }
 
@@ -24,7 +20,7 @@ void SortEngine::sort()
 {
     Q_D(SortEngine);
 
-    if (!mEngineThread) {
+    if (!m_engineThread) {
         qWarning() << Q_FUNC_INFO << " - SortEngineThread not set for SortEngine. Unable to sort.";
         return;
     }
@@ -37,12 +33,12 @@ void SortEngine::setList(QList<float> &list)
 {
     Q_D(SortEngine);
 
-    d->mList = list;
+    d->m_list = list;
 }
 
 void SortEngine::resume()
 {
-    mEngineThread->resume();
+    m_engineThread->resume();
 }
 
 void SortEngine::doSwap(int index1, int index2)
@@ -51,10 +47,12 @@ void SortEngine::doSwap(int index1, int index2)
 
     emit swap(index1, index2);
 
-    if (d->mOperationInterval > 0)
-        mEngineThread->sleep(d->mOperationInterval);
-    else
-        mEngineThread->wait();
+    if (d->m_operationInterval > 0) {
+        m_engineThread->sleep(d->m_operationInterval);
+    }
+    else {
+        m_engineThread->wait();
+    }
 }
 
 void SortEngine::doReplace(int index, float value)
@@ -63,36 +61,37 @@ void SortEngine::doReplace(int index, float value)
 
     emit replace(index, value);
 
-    if (d->mOperationInterval > 0)
-        mEngineThread->sleep(d->mOperationInterval);
-    else
-        mEngineThread->wait();
+    if (d->m_operationInterval > 0) {
+        m_engineThread->sleep(d->m_operationInterval);
+    } else {
+        m_engineThread->wait();
+    }
 }
 
 int SortEngine::sortingAlgorithm()
 {
     Q_D(SortEngine);
 
-    return d->mSortingAlgorithm;
+    return d->m_sortingAlgorithm;
 }
 
 void SortEngine::setSortingAlgorithm(int sortingAlgorithm)
 {
     Q_D(SortEngine);
 
-    d->mSortingAlgorithm = sortingAlgorithm;
+    d->m_sortingAlgorithm = sortingAlgorithm;
 }
 
 int SortEngine::operationInterval()
 {
     Q_D(SortEngine);
 
-    return d->mOperationInterval;
+    return d->m_operationInterval;
 }
 
 void SortEngine::setOperationInterval(int operationInterval)
 {
     Q_D(SortEngine);
 
-    d->mOperationInterval = operationInterval;
+    d->m_operationInterval = operationInterval;
 }

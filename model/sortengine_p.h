@@ -13,6 +13,7 @@ public:
     SortEnginePrivate(SortEngine *q);
 
     void sort();
+
     // Sorting functions
     void bubbleSort();
     void exchangeSort();
@@ -32,10 +33,10 @@ public:
     void replace(int, float);
 
     SortEngine *q_ptr;
-    QList<float> mList;
+    QList<float> m_list;
 
-    int mSortingAlgorithm;
-    int mOperationInterval;
+    int m_sortingAlgorithm;
+    int m_operationInterval;
 };
 
 #endif // SORTENGINE_P_H
