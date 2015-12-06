@@ -10,8 +10,8 @@ SortEngineThread::SortEngineThread(QObject *parent)
     start();
     m_engine->moveToThread(this);
 
-    connect(this, SIGNAL(finished()), m_engine, SLOT(deleteLater()));
-    connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
+    connect(this, &QThread::finished, m_engine, &QObject::deleteLater);
+    connect(this, &QThread::finished, this, &QObject::deleteLater);
 }
 
 void SortEngineThread::wait()

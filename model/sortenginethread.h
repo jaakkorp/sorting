@@ -13,6 +13,7 @@ class SortEngineThread : public QThread
 
 public:
     SortEngineThread(QObject *parent = 0);
+
     Q_INVOKABLE void wait();
     Q_INVOKABLE void resume();
     Q_INVOKABLE void sleep(int operationInterval);
