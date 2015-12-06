@@ -1,42 +1,41 @@
 #include "sortenginethread.h"
 #include "sortengine.h"
-#include <QDebug>
+#include <QMutexLocker>
 
 SortEngineThread::SortEngineThread(QObject *parent)
     : QThread(parent)
-    , mEngine(new SortEngine())
-    , mOperationInterval(200)
+    , m_engine(new SortEngine())
+    , m_operationInterval(200)
 {
     start();
-    setPriority(QThread::HighestPriority);
-    mEngine->moveToThread(this);
+    m_engine->moveToThread(this);
 
-    connect(this, SIGNAL(finished()), mEngine, SLOT(deleteLater()));
+    connect(this, SIGNAL(finished()), m_engine, SLOT(deleteLater()));
     connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
-}
-
-SortEngineThread::~SortEngineThread()
-{
-}
-
-SortEngine* SortEngineThread::sortEngine()
-{
-    return mEngine;
 }
 
 void SortEngineThread::wait()
 {
-    lock.lock();
-    mwaitCondition.wait(&lock);
-    lock.unlock();
+    QMutexLocker locker(&m_lock);
+    m_waitCondition.wait(&m_lock);
 }
 
 void SortEngineThread::resume()
 {
-    mwaitCondition.wakeAll();
+    m_waitCondition.wakeAll();
 }
 
 void SortEngineThread::sleep(int operationInterval)
 {
     msleep(operationInterval);
+}
+
+SortEngine* SortEngineThread::sortEngine()
+{
+    return m_engine;
+}
+
+void SortEngineThread::run()
+{
+    exec();
 }

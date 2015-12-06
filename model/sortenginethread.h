@@ -13,20 +13,19 @@ class SortEngineThread : public QThread
 
 public:
     SortEngineThread(QObject *parent = 0);
-    ~SortEngineThread();
     Q_INVOKABLE void wait();
     Q_INVOKABLE void resume();
-    Q_INVOKABLE void sleep(int);
+    Q_INVOKABLE void sleep(int operationInterval);
     SortEngine* sortEngine();
 
 protected:
-    void run() { exec(); }
+    virtual void run();
 
 private:
-    QMutex lock;
-    QWaitCondition mwaitCondition;
-    SortEngine *mEngine;
-    int mOperationInterval;
+    QMutex m_lock;
+    QWaitCondition m_waitCondition;
+    SortEngine *m_engine;
+    int m_operationInterval;
 };
 
 #endif // SORTENGINETHREAD_H
