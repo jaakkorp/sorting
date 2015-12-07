@@ -24,9 +24,34 @@ Item {
             resultFlash.showResult(result)
     }
 
-    QtObject {
-        id: internal
-        property bool needResult
+    onSortingChanged: {
+        if (sorting)
+            resultFlash.clear()
+    }
+
+    onSortedChanged: {
+        if (!sorted)
+            resultFlash.clear()
+    }
+
+    function sort(initTime) {
+        if (!sortBox.sorted) {
+            internal.needResult = true
+            root.result = 0;
+            readySteadyGo.countDown(initTime)
+        }
+    }
+
+    function scramble() {
+        sortBox.scramble();
+    }
+
+    function setOrder(array) {
+        sortBox.setOrder(array)
+    }
+
+    function setSortedFalse() {
+        sortBox.setSortedFalse()
     }
 
     ColumnLayout {
@@ -125,14 +150,8 @@ Item {
                 sortBox: sortBox
             }
 
-            Label {
-                id: operationCountLabel
-                text: sortBox.operationCount
-            }
-
-            Label {
-                id: resultLabel
-                text: result === 0 ? "" : result
+            Item {
+                Layout.fillWidth: true
             }
 
             CheckBox {
@@ -154,23 +173,8 @@ Item {
         }
     }
 
-    function sort(initTime) {
-        if (!sortBox.sorted) {
-            internal.needResult = true
-            root.result = 0;
-            readySteadyGo.countDown(initTime)
-        }
-    }
-
-    function scramble() {
-        sortBox.scramble();
-    }
-
-    function setOrder(array) {
-        sortBox.setOrder(array)
-    }
-
-    function setSortedFalse() {
-        sortBox.setSortedFalse()
+    QtObject {
+        id: internal
+        property bool needResult
     }
 }

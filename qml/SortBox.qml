@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import Qt.labs.sortboxmodel 1.0
+import QtQuick.Controls 1.4
 
 Rectangle {
     id: root
@@ -19,6 +20,20 @@ Rectangle {
     border.width: 1
 
     onSortedChanged: if (sorted) sortedAnimation.start()
+
+    Label {
+        anchors.margins: 5
+        anchors.top: parent.top
+        anchors.left: parent.left
+
+        text: sortBoxModel.operationCount
+        font.pixelSize: 18
+        color: "steelblue"
+        opacity: 0.9
+
+        visible: sorted || sorting
+
+    }
 
     Row {
         id: barRow
