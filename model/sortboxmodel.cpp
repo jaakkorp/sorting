@@ -39,10 +39,6 @@ SortBoxModel::SortBoxModel(QObject *parent)
     scramble();
 }
 
-SortBoxModel::~SortBoxModel()
-{
-}
-
 QHash<int, QByteArray> SortBoxModel::roleNames() const
 {
     QHash<int, QByteArray> roles;

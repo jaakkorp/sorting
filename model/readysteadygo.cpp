@@ -11,10 +11,6 @@ ReadySteadyGo::ReadySteadyGo(QObject *parent)
 {
 }
 
-ReadySteadyGo::~ReadySteadyGo()
-{
-}
-
 bool ReadySteadyGo::running() const
 {
     return m_running;

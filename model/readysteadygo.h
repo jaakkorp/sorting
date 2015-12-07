@@ -13,7 +13,6 @@ class ReadySteadyGo : public QObject
 
 public:
     ReadySteadyGo(QObject *parent = 0);
-    ~ReadySteadyGo();
 
     bool running() const;
 
