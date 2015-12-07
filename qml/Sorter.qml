@@ -61,7 +61,6 @@ Item {
 
         RowLayout {
             Layout.fillWidth: true
-            spacing: column.width - comboBox.width - closeButton.width
 
             ComboBox {
                 id: comboBox
@@ -79,6 +78,10 @@ Item {
                     ListElement { text: "Merge sort"; }
                     ListElement { text: "Quick sort"; }
                 }
+            }
+
+            Item {
+                Layout.fillWidth: true
             }
 
             CloseButton {
