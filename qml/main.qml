@@ -234,7 +234,6 @@ ApplicationWindow {
             sortedItemsCount++
             results.addRaceTime(sortingTime)
             if (sortedItemsCount === sortingItemsCount) {
-                console.log("Sorted!")
                 for (var j = 0; j < sorters.count; j++) {
                     if (sorters.itemAt(j).selected && !sorters.itemAt(j).sorting) {
                         sorters.itemAt(j).result = results.getResult(sorters.itemAt(j).sortingTime)

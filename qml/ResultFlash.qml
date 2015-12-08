@@ -29,7 +29,7 @@ Item {
         anchors.bottom: root.bottom
 
         color: "midnightblue"
-        font.pointSize: root.height * 0.1
+        font.pointSize: root.height >= 10 ? root.height * 0.1 : 1
         font.bold: true
     }
 
