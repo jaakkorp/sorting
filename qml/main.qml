@@ -38,17 +38,44 @@ ApplicationWindow {
             Repeater {
                 id: sorters
                 model: sorterModel
+
                 Sorter {
-                    id: sorter
                     height: grid.itemHeight
                     width: grid.itemWidth
                     barCount: count
                     sortingAlgorithm: algorithm
                     onSortedChanged: if (sorted && needResult) {
-                                         sorter.result = results.getResult()
-                                         internal.sorted(sorter.sortingTime)
+                                         result = results.getResult()
+                                         internal.sorted(sortingTime)
                                      }
                     onClosed: internal.deleteSorter(index)
+
+                    Component.onCompleted: {
+                        selectAll.clicked.connect(function() {
+                            selected = true
+                        })
+
+                        deselectAll.clicked.connect(function() {
+                            selected = false
+                        })
+
+                        scrambleOrder.clicked.connect(function() {
+                            if (selected)
+                                scramble()
+                        })
+
+                        setUnsorted.clicked.connect(function() {
+                            if (selected)
+                                setSortedFalse()
+                        })
+
+                        internal.race.connect(function() {
+                            if (sort(internal.initTime)) {
+                                internal.sortingItemsCount++
+                                internal.racing = true
+                            }
+                        })
+                    }
                 }
             }
         }
@@ -58,26 +85,30 @@ ApplicationWindow {
             spacing: 20
 
             Button {
+                id: selectAll
+
                 text: "Select all"
-                enabled: !internal.sorting
-                onClicked: internal.selectAll()
+                enabled: !internal.racing
             }
 
             Button {
+                id: deselectAll
+
                 text: "Deselect all"
-                enabled: !internal.sorting
-                onClicked: internal.deselectAll()
+                enabled: !internal.racing
             }
 
             Button {
                 text: "Sort"
-                enabled: !internal.sorting
+                enabled: !internal.racing
                 onClicked: internal.sortSelected()
             }
 
             Button {
+                id: scrambleOrder
+
                 text: "Scramble"
-                enabled: !internal.sorting
+                enabled: !internal.racing
                 onClicked: {
                     for (var i = 0; i < sorters.count; i++) {
                         if (sorters.itemAt(i).selected)
@@ -88,19 +119,21 @@ ApplicationWindow {
 
             Button {
                 text: "Set reverse order"
-                enabled: !internal.sorting
+                enabled: !internal.racing
                 onClicked: internal.setReverseOrder()
             }
 
             Button {
                 text: "Set same order"
-                enabled: !internal.sorting
+                enabled: !internal.racing
                 onClicked: internal.setRandomOrder()
             }
 
             Button {
+                id: setUnsorted
+
                 text: "Set sorted unsorted"
-                enabled: !internal.sorting
+                enabled: !internal.racing
                 onClicked: internal.setSortedFalse()
             }
 
@@ -114,12 +147,14 @@ ApplicationWindow {
                 id: comboBox
 
                 Layout.minimumWidth: 150
+                enabled: !internal.racing
 
                 onCurrentIndexChanged: {
                     for (var i = 0; i < sorters.count; i++)
                         if (sorters.itemAt(i).selected)
                             sorters.itemAt(i).sortingAlgorithm = currentIndex
                 }
+
                 model: ListModel {
                     ListElement { text : "Bubble sort"; }
                     ListElement { text : "Exchange sort"; }
@@ -181,43 +216,33 @@ ApplicationWindow {
 
     QtObject {
         id: internal
-        property bool sorting
+
+        property bool racing
         property int sortingItemsCount
         property int sortedItemsCount
+        property var initTime
+
+        signal race
 
         function sortSelected() {
             reset()
-            var initTime = readySteadyGo.initTime()
-            for (var i = 0; i < sorters.count; i++) {
-                if (sorters.itemAt(i).selected && !sorters.itemAt(i).sorting && !sorters.itemAt(i).sorted) {
-                    sortingItemsCount++
-                    sorters.itemAt(i).sort(initTime)
-                    sorting = true
-                }
-            }
-        }
-
-        function selectAll() {
-            for (var i = 0; i < sorters.count; i++)
-                sorters.itemAt(i).selected = true
-        }
-
-        function deselectAll() {
-            for (var i = 0; i < sorters.count; i++)
-                sorters.itemAt(i).selected = false
+            initTime = readySteadyGo.initTime()
+            race()
         }
 
         function sorted(sortingTime) {
             sortedItemsCount++
             results.addRaceTime(sortingTime)
             if (sortedItemsCount === sortingItemsCount) {
+                console.log("Sorted!")
                 for (var j = 0; j < sorters.count; j++) {
                     if (sorters.itemAt(j).selected && !sorters.itemAt(j).sorting) {
                         sorters.itemAt(j).result = results.getResult(sorters.itemAt(j).sortingTime)
                     }
                 }
+
+                racing = false
             }
-            sorting = false
         }
 
         function setReverseOrder() {
@@ -234,12 +259,6 @@ ApplicationWindow {
                     sorters.itemAt(i).setOrder(array)
         }
 
-        function setSortedFalse() {
-            for (var i = 0; i < sorters.count; i++)
-                if (sorters.itemAt(i).selected)
-                    sorters.itemAt(i).setSortedFalse()
-        }
-
         function addSorter() {
             if (sorterModel.count < 6)
                 sorterModel.insert(sorterModel.count, {"count": 100, "algorithm": SortBoxModel.QuickSort});
@@ -247,7 +266,7 @@ ApplicationWindow {
 
         function deleteSorter(index) {
             if (sorterModel.count > 1) {
-                if (sorting && (sorters.itemAt(index).aboutToSort || sorters.itemAt(index).sorting))
+                if (racing && (sorters.itemAt(index).aboutToSort || sorters.itemAt(index).sorting))
                     sortingItemsCount--
                 sorterModel.remove(index, 1)
             }

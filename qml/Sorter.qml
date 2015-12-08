@@ -35,11 +35,16 @@ Item {
     }
 
     function sort(initTime) {
-        if (!sortBox.sorted) {
+        var willSort = false
+
+        if (selected && !sorted && !sorting) {
             internal.needResult = true
             root.result = 0;
             readySteadyGo.countDown(initTime)
+            willSort = true
         }
+
+        return willSort
     }
 
     function scramble() {
