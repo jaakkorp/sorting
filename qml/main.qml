@@ -109,12 +109,6 @@ ApplicationWindow {
 
                 text: "Scramble"
                 enabled: !internal.racing
-                onClicked: {
-                    for (var i = 0; i < sorters.count; i++) {
-                        if (sorters.itemAt(i).selected)
-                            sorters.itemAt(i).scramble()
-                    }
-                }
             }
 
             Button {
