@@ -6,6 +6,7 @@ Item {
 
     function showResult(result) {
         internal.result = result
+        resultAnimation.stop()
         resultAnimation.start()
     }
 
