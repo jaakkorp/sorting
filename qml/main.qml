@@ -75,6 +75,29 @@ ApplicationWindow {
                                 internal.racing = true
                             }
                         })
+
+                        comboBox.currentIndexChanged.connect(function() {
+                            if (selected)
+                                sortingAlgorithm = comboBox.currentIndex
+                        })
+
+                        internal.raceFinished.connect(function() {
+                            if (selected && sorted && needResult) {
+                                result = results.getResult(sortingTime)
+                            }
+                        })
+
+                        internal.randomOrderRequested.connect(function() {
+                            if (selected) {
+                                setOrder(internal.randomOrder)
+                            }
+                        })
+
+                        internal.reverseOrderRequested.connect(function() {
+                            if (selected) {
+                                setOrder(internal.reverseOrder)
+                            }
+                        })
                     }
                 }
             }
@@ -143,12 +166,6 @@ ApplicationWindow {
                 Layout.minimumWidth: 150
                 enabled: !internal.racing
 
-                onCurrentIndexChanged: {
-                    for (var i = 0; i < sorters.count; i++)
-                        if (sorters.itemAt(i).selected)
-                            sorters.itemAt(i).sortingAlgorithm = currentIndex
-                }
-
                 model: ListModel {
                     ListElement { text : "Bubble sort"; }
                     ListElement { text : "Exchange sort"; }
@@ -215,8 +232,13 @@ ApplicationWindow {
         property int sortingItemsCount
         property int sortedItemsCount
         property var initTime
+        property var randomOrder
+        property var reverseOrder
 
         signal race
+        signal raceFinished
+        signal randomOrderRequested
+        signal reverseOrderRequested
 
         function sortSelected() {
             reset()
@@ -227,29 +249,21 @@ ApplicationWindow {
         function sorted(sortingTime) {
             sortedItemsCount++
             results.addRaceTime(sortingTime)
-            if (sortedItemsCount === sortingItemsCount) {
-                for (var j = 0; j < sorters.count; j++) {
-                    if (sorters.itemAt(j).selected && !sorters.itemAt(j).sorting) {
-                        sorters.itemAt(j).result = results.getResult(sorters.itemAt(j).sortingTime)
-                    }
-                }
 
+            if (sortedItemsCount === sortingItemsCount) {
                 racing = false
+                raceFinished()
             }
         }
 
         function setReverseOrder() {
-            var array = sortBoxModel.reverseOrder(100)
-            for (var i = 0; i < sorters.count; i++)
-                if (sorters.itemAt(i).selected)
-                    sorters.itemAt(i).setOrder(array)
+            reverseOrder = sortBoxModel.reverseOrder(100)
+            reverseOrderRequested()
         }
 
         function setRandomOrder() {
-            var array = sortBoxModel.randomOrder(100)
-            for (var i = 0; i < sorters.count; i++)
-                if (sorters.itemAt(i).selected)
-                    sorters.itemAt(i).setOrder(array)
+            randomOrder = sortBoxModel.randomOrder(100)
+            randomOrderRequested()
         }
 
         function addSorter() {
@@ -259,8 +273,7 @@ ApplicationWindow {
 
         function deleteSorter(index) {
             if (sorterModel.count > 1) {
-                if (racing && (sorters.itemAt(index).aboutToSort || sorters.itemAt(index).sorting))
-                    sortingItemsCount--
+                sortingItemsCount--
                 sorterModel.remove(index, 1)
             }
         }
