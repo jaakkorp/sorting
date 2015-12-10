@@ -36,7 +36,6 @@ ApplicationWindow {
             }
 
             Repeater {
-                id: sorters
                 model: sorterModel
 
                 Sorter {
