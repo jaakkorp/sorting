@@ -40,17 +40,17 @@ DESTDIR = ../sortboxmodel
 TARGET = $$qtLibraryTarget(qmlsortboxmodelplugin)
 
 HEADERS += sortboxmodel.h \
-           sortenginethread.h \
            sortengine.h \
-           sortengine_p.h \
+           sortengineworker.h \
+           sortengineworker_p.h \
            raceresults.h \
            readysteadygo.h \
            constants.h
 
 SOURCES += sortboxmodel.cpp \
-           sortenginethread.cpp \
            sortengine.cpp \
-           sortengine_p.cpp \
+           sortengineworker.cpp \
+           sortengineworker_p.cpp \
            raceresults.cpp \
            readysteadygo.cpp \
            plugin.cpp

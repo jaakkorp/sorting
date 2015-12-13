@@ -1,47 +1,46 @@
-#ifndef SORTENGINE_H
-#define SORTENGINE_H
+#ifndef SORTENGINETHREAD_H
+#define SORTENGINETHREAD_H
 
-#include <QObject>
-#include <QMetaType>
+#include <QThread>
+#include <QMutex>
+#include <QWaitCondition>
 
-class SortEngineThread;
-class SortEnginePrivate;
+class SortEngineWorker;
 
-class SortEngine : public QObject
+class SortEngine : public QThread
 {
     Q_OBJECT
 
 public:
-    explicit SortEngine();
+    SortEngine(QObject *parent = 0);
 
-    void setThread(SortEngineThread *thread);
+    Q_INVOKABLE void wait();
+    Q_INVOKABLE void resume();
+    Q_INVOKABLE void sleep(int operationInterval);
     void setList(const QList<float> &list);
     int sortingAlgorithm();
     void setSortingAlgorithm(int sortingAlgorithm);
     int operationInterval();
     void setOperationInterval(int operationInterval);
-    void moveToThread(QThread *thread);
-    Q_INVOKABLE void sort();
-    Q_INVOKABLE void resume();
+    void sort();
 
 signals:
     void swap(int index1, int index2);
     void replace(int index, float value);
     void sorted();
 
-private:
-    void doSwap(int index1, int index2);
-    void doReplace(int index, float value);
-    void wait();
-
 protected:
-    SortEngineThread *m_engineThread;
-    SortEnginePrivate *d_ptr;
+    virtual void run();
 
 private:
-    Q_DECLARE_PRIVATE(SortEngine)
+    Q_INVOKABLE void doResume();
+
+private:
+    QMutex m_lock;
+    QWaitCondition m_waitCondition;
+    SortEngineWorker *m_worker;
+    int m_operationInterval;
 };
 
-Q_DECLARE_METATYPE(SortEngine*)
+#endif // SORTENGINETHREAD_H
 
-#endif // SORTENGINE_H

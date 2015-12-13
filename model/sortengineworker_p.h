@@ -3,14 +3,14 @@
 
 #include <QList>
 
-class SortEngine;
+class SortEngineWorker;
 
-class SortEnginePrivate
+class SortEngineWorkerPrivate
 {
-    Q_DECLARE_PUBLIC(SortEngine)
+    Q_DECLARE_PUBLIC(SortEngineWorker)
 
 public:
-    SortEnginePrivate(SortEngine *q);
+    SortEngineWorkerPrivate(SortEngineWorker *q);
 
     void sort();
 
@@ -32,7 +32,7 @@ public:
     void swap(int, int);
     void replace(int, float);
 
-    SortEngine *q_ptr;
+    SortEngineWorker *q_ptr;
     QList<float> m_list;
 
     int m_sortingAlgorithm;

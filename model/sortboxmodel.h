@@ -6,7 +6,6 @@
 
 QT_USE_NAMESPACE
 
-class SortEngineThread;
 class SortEngine;
 
 class SortBoxModel : public QAbstractListModel
@@ -86,7 +85,7 @@ private:
     SortingAlgorithm toSortingEnum(int sortingAlgorithm);
 
 private:
-    SortEngineThread *m_engineThread;
+    SortEngine *m_engine;
     int m_size;
     bool m_sorting;
     bool m_sorted;

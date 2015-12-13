@@ -1,14 +1,14 @@
-#include "sortengine_p.h"
-#include "sortengine.h"
+#include "sortengineworker_p.h"
+#include "sortengineworker.h"
 #include "constants.h"
 
-SortEnginePrivate::SortEnginePrivate(SortEngine *q)
+SortEngineWorkerPrivate::SortEngineWorkerPrivate(SortEngineWorker *q)
     : q_ptr(q)
     , m_operationInterval(0)
 {
 }
 
-void SortEnginePrivate::sort()
+void SortEngineWorkerPrivate::sort()
 {
         switch (m_sortingAlgorithm) {
         case KBubbleSort:
@@ -44,7 +44,7 @@ void SortEnginePrivate::sort()
         }
 }
 
-void SortEnginePrivate::bubbleSort()
+void SortEngineWorkerPrivate::bubbleSort()
 {
     for (auto i(m_list.count() - 1); i > 0; --i) {
         for (auto j(m_list.count() - 1); j > 0; --j) {
@@ -55,7 +55,7 @@ void SortEnginePrivate::bubbleSort()
     }
 }
 
-void SortEnginePrivate::exchangeSort()
+void SortEngineWorkerPrivate::exchangeSort()
 {
     for (auto i(0); i < m_list.count() - 1 ; ++i) {
         for (auto j(i + 1); j < m_list.count(); ++j) {
@@ -66,7 +66,7 @@ void SortEnginePrivate::exchangeSort()
     }
 }
 
-void SortEnginePrivate::selectionSort()
+void SortEngineWorkerPrivate::selectionSort()
 {
     for (auto i(0); i < m_list.count(); ++i) {
         auto last = m_list.count() - 1;
@@ -81,7 +81,7 @@ void SortEnginePrivate::selectionSort()
     }
 }
 
-void SortEnginePrivate::insertionSort()
+void SortEngineWorkerPrivate::insertionSort()
 {
     for (auto i(1); i < m_list.count(); ++i) {
         auto j = i;
@@ -92,7 +92,7 @@ void SortEnginePrivate::insertionSort()
     }
 }
 
-void SortEnginePrivate::shellSort()
+void SortEngineWorkerPrivate::shellSort()
 {
     auto flag = true;
     auto d = m_list.count();
@@ -110,12 +110,12 @@ void SortEnginePrivate::shellSort()
     }
 }
 
-void SortEnginePrivate::mergeSort()
+void SortEngineWorkerPrivate::mergeSort()
 {
     mergeSort(0, m_list.count() - 1);
 }
 
-void SortEnginePrivate::mergeSort(int p, int r)
+void SortEngineWorkerPrivate::mergeSort(int p, int r)
 {
     if (p < r) {
         auto mid = (p + r) / 2;
@@ -125,7 +125,7 @@ void SortEnginePrivate::mergeSort(int p, int r)
     }
 }
 
-void SortEnginePrivate::merge(int p, int r)
+void SortEngineWorkerPrivate::merge(int p, int r)
 {
     auto mid = (p + r) / 2;
     auto i1 = 0;
@@ -152,12 +152,12 @@ void SortEnginePrivate::merge(int p, int r)
         replace(i, temp[i-p]);
 }
 
-void SortEnginePrivate::quickSort()
+void SortEngineWorkerPrivate::quickSort()
 {
     quickSort(0, m_list.count() - 1);
 }
 
-void SortEnginePrivate::quickSort(int left, int right)
+void SortEngineWorkerPrivate::quickSort(int left, int right)
 {
     if (left < right) {
         auto pivot = (left + right) / 2;
@@ -168,7 +168,7 @@ void SortEnginePrivate::quickSort(int left, int right)
     }
 }
 
-int SortEnginePrivate::partition(int left, int right, int pivotIndex)
+int SortEngineWorkerPrivate::partition(int left, int right, int pivotIndex)
 {
     auto pivot = m_list[pivotIndex];
 
@@ -189,18 +189,18 @@ int SortEnginePrivate::partition(int left, int right, int pivotIndex)
     return right;
 }
 
-void SortEnginePrivate::swap(int index1, int index2)
+void SortEngineWorkerPrivate::swap(int index1, int index2)
 {
-    Q_Q(SortEngine);
+    Q_Q(SortEngineWorker);
 
     m_list.swap(index1, index2);
     q->doSwap(index1, index2);
 
 }
 
-void SortEnginePrivate::replace(int index, float value)
+void SortEngineWorkerPrivate::replace(int index, float value)
 {
-    Q_Q(SortEngine);
+    Q_Q(SortEngineWorker);
 
     m_list.replace(index, value);
     q->doReplace(index, value);

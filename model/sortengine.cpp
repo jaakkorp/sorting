@@ -1,97 +1,76 @@
 #include "sortengine.h"
-#include "sortengine_p.h"
-#include "sortenginethread.h"
-#include "constants.h"
+#include "sortengineworker.h"
+#include <QMutexLocker>
 
-#include <QDebug>
-
-SortEngine::SortEngine()
-  : d_ptr(new SortEnginePrivate(this))
+SortEngine::SortEngine(QObject *parent)
+    : QThread(parent)
+    , m_worker(new SortEngineWorker())
+    , m_operationInterval(200)
 {
+    start();
+    m_worker->moveToThread(this);
+
+    connect(m_worker, &SortEngineWorker::swap, this, &SortEngine::swap);
+    connect(m_worker, &SortEngineWorker::replace, this, &SortEngine::replace);
+    connect(m_worker, &SortEngineWorker::sorted, this, &SortEngine::sorted);
+
+    connect(this, &QThread::finished, m_worker, &QObject::deleteLater);
+    connect(this, &QThread::finished, this, &QObject::deleteLater);
 }
 
-void SortEngine::moveToThread(QThread *thread)
+void SortEngine::wait()
 {
-    m_engineThread = qobject_cast<SortEngineThread*>(thread);
-    QObject::moveToThread(thread);
-}
-
-void SortEngine::sort()
-{
-    Q_D(SortEngine);
-
-    if (!m_engineThread) {
-        qWarning() << Q_FUNC_INFO << " - SortEngineThread not set for SortEngine. Unable to sort.";
-        return;
-    }
-
-    d->sort();
-    emit sorted();
-}
-
-void SortEngine::setList(const QList<float> &list)
-{
-    Q_D(SortEngine);
-
-    d->m_list = list;
+    QMutexLocker locker(&m_lock);
+    m_waitCondition.wait(&m_lock);
 }
 
 void SortEngine::resume()
 {
-    m_engineThread->resume();
+    if (operationInterval() > 0)
+        QMetaObject::invokeMethod(this, "doResume");
 }
 
-void SortEngine::doSwap(int index1, int index2)
+void SortEngine::sleep(int operationInterval)
 {
-    Q_D(SortEngine);
-
-    emit swap(index1, index2);
-
-    if (d->m_operationInterval > 0) {
-        m_engineThread->sleep(d->m_operationInterval);
-    }
-    else {
-        m_engineThread->wait();
-    }
+    msleep(operationInterval);
 }
 
-void SortEngine::doReplace(int index, float value)
+void SortEngine::setList(const QList<float> &list)
 {
-    Q_D(SortEngine);
-
-    emit replace(index, value);
-
-    if (d->m_operationInterval > 0) {
-        m_engineThread->sleep(d->m_operationInterval);
-    } else {
-        m_engineThread->wait();
-    }
+    m_worker->setList(list);
 }
 
 int SortEngine::sortingAlgorithm()
 {
-    Q_D(SortEngine);
-
-    return d->m_sortingAlgorithm;
+    return m_worker->sortingAlgorithm();
 }
 
 void SortEngine::setSortingAlgorithm(int sortingAlgorithm)
 {
-    Q_D(SortEngine);
-
-    d->m_sortingAlgorithm = sortingAlgorithm;
+    m_worker->setSortingAlgorithm(sortingAlgorithm);
 }
 
 int SortEngine::operationInterval()
 {
-    Q_D(SortEngine);
-
-    return d->m_operationInterval;
+    return m_operationInterval;
 }
 
 void SortEngine::setOperationInterval(int operationInterval)
 {
-    Q_D(SortEngine);
+    m_operationInterval = operationInterval;
+}
 
-    d->m_operationInterval = operationInterval;
+void SortEngine::sort()
+{
+    QMetaObject::invokeMethod(m_worker, "sort");
+}
+
+void SortEngine::run()
+{
+    exec();
+}
+
+void SortEngine::doResume()
+{
+    m_waitCondition.wakeAll();
 }
