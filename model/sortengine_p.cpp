@@ -4,6 +4,7 @@
 
 SortEnginePrivate::SortEnginePrivate(SortEngine *q)
     : q_ptr(q)
+    , m_operationInterval(0)
 {
 }
 

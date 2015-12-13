@@ -15,7 +15,7 @@ public:
     explicit SortEngine();
 
     void setThread(SortEngineThread *thread);
-    void setList(QList<float> &list);
+    void setList(const QList<float> &list);
     int sortingAlgorithm();
     void setSortingAlgorithm(int sortingAlgorithm);
     int operationInterval();

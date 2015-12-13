@@ -18,14 +18,13 @@ SortBoxModel::SortBoxModel(QObject *parent)
     , m_sorted(false)
     , m_operationCount(0)
 {
-    qRegisterMetaType<SortEngine*>("SortEngine*");
+    qRegisterMetaType<SortEngine*>("SortEngine *");
 
     m_engineThread = new SortEngineThread();
-    m_engine = m_engineThread->sortEngine();
 
-    connect(m_engine, &SortEngine::swap, this, &SortBoxModel::swap);
-    connect(m_engine, &SortEngine::replace, this, &SortBoxModel::replace);
-    connect(m_engine, &SortEngine::sorted, this, &SortBoxModel::listSorted);
+    connect(m_engineThread, &SortEngineThread::swap, this, &SortBoxModel::swap);
+    connect(m_engineThread, &SortEngineThread::replace, this, &SortBoxModel::replace);
+    connect(m_engineThread, &SortEngineThread::sorted, this, &SortBoxModel::listSorted);
     connect(this, &QObject::destroyed, m_engineThread, &QThread::quit);
 
     auto heightRatioIncrease = (KLastBarHeightRatio - KFirstBarHeightRatio) / (m_size - 1);
@@ -68,13 +67,13 @@ int SortBoxModel::rowCount(const QModelIndex &/*parent*/) const
 
 SortBoxModel::SortingAlgorithm SortBoxModel::sortingAlgorithm()
 {
-    return toSortingEnum(m_engine->sortingAlgorithm());
+    return toSortingEnum(m_engineThread->sortingAlgorithm());
 }
 
 void SortBoxModel::setSortingAlgorithm(SortBoxModel::SortingAlgorithm sortingAlgorithm)
 {
-    if (sortingAlgorithm != toSortingEnum(m_engine->sortingAlgorithm())) {
-        m_engine->setSortingAlgorithm(toSortingConstInt(sortingAlgorithm));
+    if (sortingAlgorithm != toSortingEnum(m_engineThread->sortingAlgorithm())) {
+        m_engineThread->setSortingAlgorithm(toSortingConstInt(sortingAlgorithm));
         emit sortingAlgorithmChanged();
     }
 }
@@ -126,13 +125,13 @@ int SortBoxModel::operationCount() const
 
 int SortBoxModel::operationInterval() const
 {
-    return m_engine->operationInterval();
+    return m_engineThread->operationInterval();
 }
 
 void SortBoxModel::setOperationInterval(int operationInterval)
 {
-    if (operationInterval != m_engine->operationInterval()) {
-        m_engine->setOperationInterval(operationInterval);
+    if (operationInterval != m_engineThread->operationInterval()) {
+        m_engineThread->setOperationInterval(operationInterval);
 
         emit operationIntervalChanged();
     }
@@ -140,8 +139,8 @@ void SortBoxModel::setOperationInterval(int operationInterval)
 
 void SortBoxModel::sort()
 {
-    m_engine->setList(m_barHeights);
-    QMetaObject::invokeMethod(m_engine, "sort");
+    m_engineThread->setList(m_barHeights);
+    m_engineThread->sort();
     m_sorting = true;
     m_operationCount = 0;
 
@@ -273,8 +272,8 @@ void SortBoxModel::listSorted()
 
 void SortBoxModel::proceed()
 {
-    if (!(m_engine->operationInterval() > 0))
-        QMetaObject::invokeMethod(m_engineThread, "resume");
+    m_engineThread->resume();
+
 }
 
 void SortBoxModel::repopulate()

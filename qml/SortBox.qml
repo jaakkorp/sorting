@@ -49,7 +49,7 @@ Rectangle {
                 height: barHeightRatio * root.height;
                 width: (root.width - (root.barCount - 1) * barRow.spacing) / root.barCount
                 y: root.height - height
-                animationDuration: root.animationDuration ? root.animationDuration : 200
+                animationDuration: root.animationDuration > 0 ? root.animationDuration : 200
                 onMovingChanged: if (moving)
                                      internal.barMoveInitiated()
                                  else
@@ -62,7 +62,7 @@ Rectangle {
         id: sortBoxModel
         sortingAlgorithm: root.sortingAlgorithm
         size: root.barCount
-        operationInterval: 0
+        operationInterval: 200
     }
 
     SequentialAnimation {

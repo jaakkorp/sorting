@@ -85,8 +85,8 @@ private:
     int toSortingConstInt(SortingAlgorithm sortingAlgorithm);
     SortingAlgorithm toSortingEnum(int sortingAlgorithm);
 
+private:
     SortEngineThread *m_engineThread;
-    SortEngine *m_engine;
     int m_size;
     bool m_sorting;
     bool m_sorted;

@@ -18,9 +18,23 @@ public:
     Q_INVOKABLE void resume();
     Q_INVOKABLE void sleep(int operationInterval);
     SortEngine* sortEngine();
+    void setList(const QList<float> &list);
+    int sortingAlgorithm();
+    void setSortingAlgorithm(int sortingAlgorithm);
+    int operationInterval();
+    void setOperationInterval(int operationInterval);
+    void sort();
+
+signals:
+    void swap(int index1, int index2);
+    void replace(int index, float value);
+    void sorted();
 
 protected:
     virtual void run();
+
+private:
+    Q_INVOKABLE void doResume();
 
 private:
     QMutex m_lock;

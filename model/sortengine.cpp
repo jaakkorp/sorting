@@ -29,7 +29,7 @@ void SortEngine::sort()
     emit sorted();
 }
 
-void SortEngine::setList(QList<float> &list)
+void SortEngine::setList(const QList<float> &list)
 {
     Q_D(SortEngine);
 
