@@ -1,11 +1,13 @@
 #ifndef SORTENGINEWORKER_H
 #define SORTENGINEWORKER_H
 
+#include "sortingalgorithm.h"
 #include <QObject>
 #include <QMetaType>
+#include <memory>
 
 class SortEngine;
-class SortEngineWorkerPrivate;
+class SortingAlgorithm;
 
 class SortEngineWorker : public QObject
 {
@@ -20,7 +22,7 @@ public:
     void setSortingAlgorithm(int sortingAlgorithm);
     int operationInterval();
     void setOperationInterval(int operationInterval);
-    void moveToThread(QThread *thread);
+    void moveToThread(SortEngine *sortEngine);
     Q_INVOKABLE void sort();
     Q_INVOKABLE void resume();
 
@@ -36,10 +38,9 @@ private:
 
 protected:
     SortEngine *m_engine;
-    SortEngineWorkerPrivate *d_ptr;
+    std::unique_ptr<SortingAlgorithm> m_algorithm;
 
-private:
-    Q_DECLARE_PRIVATE(SortEngineWorker)
+    friend class SortingAlgorithm;
 };
 
 Q_DECLARE_METATYPE(SortEngineWorker*)

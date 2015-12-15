@@ -1,39 +1,42 @@
 #include "sortengineworker.h"
-#include "sortengineworker_p.h"
+#include "sortingalgorithm.h"
+#include "bubblesort.h"
+#include "exchangesort.h"
+#include "selectionsort.h"
+#include "insertionsort.h"
+#include "shellsort.h"
+#include "mergesort.h"
+#include "quicksort.h"
 #include "sortengine.h"
 #include "constants.h"
 
 #include <QDebug>
 
 SortEngineWorker::SortEngineWorker()
-  : d_ptr(new SortEngineWorkerPrivate(this))
+  : m_algorithm(new QuickSort(this))
 {
 }
 
-void SortEngineWorker::moveToThread(QThread *thread)
+void SortEngineWorker::moveToThread(SortEngine *sortEngine)
 {
-    m_engine = qobject_cast<SortEngine *>(thread);
-    QObject::moveToThread(thread);
+    m_engine = sortEngine;
+    QObject::moveToThread(sortEngine);
 }
 
 void SortEngineWorker::sort()
 {
-    Q_D(SortEngineWorker);
-
     if (!m_engine) {
         qWarning() << Q_FUNC_INFO << " - SortEngine not set for SortEngineWorker. Unable to sort.";
         return;
     }
 
-    d->sort();
+    m_algorithm->sort();
     emit sorted();
 }
 
 void SortEngineWorker::setList(const QList<float> &list)
 {
-    Q_D(SortEngineWorker);
-
-    d->m_list = list;
+    m_algorithm->m_list = list;
 }
 
 void SortEngineWorker::resume()
@@ -43,12 +46,10 @@ void SortEngineWorker::resume()
 
 void SortEngineWorker::doSwap(int index1, int index2)
 {
-    Q_D(SortEngineWorker);
-
     emit swap(index1, index2);
 
-    if (d->m_operationInterval > 0) {
-        m_engine->sleep(d->m_operationInterval);
+    if (m_algorithm->m_operationInterval > 0) {
+        m_engine->sleep(m_algorithm->m_operationInterval);
     }
     else {
         m_engine->wait();
@@ -57,12 +58,10 @@ void SortEngineWorker::doSwap(int index1, int index2)
 
 void SortEngineWorker::doReplace(int index, float value)
 {
-    Q_D(SortEngineWorker);
-
     emit replace(index, value);
 
-    if (d->m_operationInterval > 0) {
-        m_engine->sleep(d->m_operationInterval);
+    if (m_algorithm->m_operationInterval > 0) {
+        m_engine->sleep(m_algorithm->m_operationInterval);
     } else {
         m_engine->wait();
     }
@@ -70,28 +69,53 @@ void SortEngineWorker::doReplace(int index, float value)
 
 int SortEngineWorker::sortingAlgorithm()
 {
-    Q_D(SortEngineWorker);
-
-    return d->m_sortingAlgorithm;
+    return m_algorithm->m_sortingAlgorithm;
 }
 
 void SortEngineWorker::setSortingAlgorithm(int sortingAlgorithm)
 {
-    Q_D(SortEngineWorker);
+    switch (sortingAlgorithm) {
+    case KBubbleSort:
+        m_algorithm.reset(new BubbleSort(this));
+        break;
 
-    d->m_sortingAlgorithm = sortingAlgorithm;
+    case KExchangeSort:
+        m_algorithm.reset(new ExchangeSort(this));
+        break;
+
+    case KSelectionSort:
+        m_algorithm.reset(new SelectionSort(this));
+        break;
+
+    case KInsertionSort:
+        m_algorithm.reset(new InsertionSort(this));
+        break;
+
+    case KShellSort:
+        m_algorithm.reset(new ShellSort(this));
+        break;
+
+    case KMergeSort:
+        m_algorithm.reset(new MergeSort(this));
+        break;
+
+    case KQuickSort:
+        m_algorithm.reset(new QuickSort(this));
+        break;
+
+    default:
+        break;
+    }
+
+    m_algorithm->m_sortingAlgorithm = sortingAlgorithm;
 }
 
 int SortEngineWorker::operationInterval()
 {
-    Q_D(SortEngineWorker);
-
-    return d->m_operationInterval;
+    return m_algorithm->m_operationInterval;
 }
 
 void SortEngineWorker::setOperationInterval(int operationInterval)
 {
-    Q_D(SortEngineWorker);
-
-    d->m_operationInterval = operationInterval;
+    m_algorithm->m_operationInterval = operationInterval;
 }

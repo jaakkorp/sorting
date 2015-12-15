@@ -42,7 +42,6 @@ ApplicationWindow {
                     height: grid.itemHeight
                     width: grid.itemWidth
                     barCount: count
-                    sortingAlgorithm: algorithm
                     onSortedChanged: if (sorted && needResult) {
                                          result = results.getResult()
                                          internal.sorted(sortingTime)
@@ -50,6 +49,8 @@ ApplicationWindow {
                     onClosed: internal.deleteSorter(index)
 
                     Component.onCompleted: {
+                        setSortingAlgorithm(algorithm)
+
                         selectAll.clicked.connect(function() {
                             selected = true
                         })
@@ -77,7 +78,7 @@ ApplicationWindow {
 
                         comboBox.currentIndexChanged.connect(function() {
                             if (selected)
-                                sortingAlgorithm = comboBox.currentIndex
+                                setSortingAlgorithm(comboBox.currentIndex)
                         })
 
                         internal.raceFinished.connect(function() {

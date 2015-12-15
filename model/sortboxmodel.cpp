@@ -72,7 +72,7 @@ SortBoxModel::SortingAlgorithm SortBoxModel::sortingAlgorithm()
 
 void SortBoxModel::setSortingAlgorithm(SortBoxModel::SortingAlgorithm sortingAlgorithm)
 {
-    if (sortingAlgorithm != toSortingEnum(m_engine->sortingAlgorithm())) {
+    if (!sorting() && sortingAlgorithm != toSortingEnum(m_engine->sortingAlgorithm())) {
         m_engine->setSortingAlgorithm(toSortingConstInt(sortingAlgorithm));
         emit sortingAlgorithmChanged();
     }

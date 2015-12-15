@@ -42,18 +42,32 @@ TARGET = $$qtLibraryTarget(qmlsortboxmodelplugin)
 HEADERS += sortboxmodel.h \
            sortengine.h \
            sortengineworker.h \
-           sortengineworker_p.h \
+           sortingalgorithm.h \
            raceresults.h \
            readysteadygo.h \
-           constants.h
+           constants.h \
+    bubblesort.h \
+    quicksort.h \
+    exchangesort.h \
+    selectionsort.h \
+    insertionsort.h \
+    mergesort.h \
+    shellsort.h
 
 SOURCES += sortboxmodel.cpp \
            sortengine.cpp \
            sortengineworker.cpp \
-           sortengineworker_p.cpp \
+           sortingalgorithm.cpp \
            raceresults.cpp \
            readysteadygo.cpp \
-           plugin.cpp
+           plugin.cpp \
+    bubblesort.cpp \
+    quicksort.cpp \
+    exchangesort.cpp \
+    selectionsort.cpp \
+    insertionsort.cpp \
+    mergesort.cpp \
+    shellsort.cpp
 
 DESTPATH=$$[QML2_IMPORT_PATH]/Qt/labs/sortboxmodel
 

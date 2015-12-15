@@ -11,7 +11,7 @@ Item {
     property int barCount
     property alias selected: checkBox.checked
     property int result
-    property alias sortingAlgorithm: comboBox.currentIndex
+    readonly property alias sortingAlgorithm: comboBox.currentIndex
     property alias animationDuration: sortBox.animationDuration
     readonly property bool sorting: sortBox.sorting
     readonly property bool aboutToSort: readySteadyGo.running
@@ -32,6 +32,11 @@ Item {
     onSortedChanged: {
         if (!sorted)
             resultFlash.clear()
+    }
+
+    function setSortingAlgorithm(sortingAlgorithm) {
+        if (!sorting)
+            comboBox.currentIndex = sortingAlgorithm
     }
 
     function sort(initTime) {
@@ -72,7 +77,7 @@ Item {
                 Layout.minimumWidth: root.width / 2
                 Layout.minimumHeight: comboBox.implicitHeight
                 currentIndex: root.sortingAlgorithm
-                onCurrentIndexChanged: root.sortingAlgorithm = currentIndex
+                onCurrentIndexChanged: setSortingAlgorithm(currentIndex)
                 enabled: !sortBox.sorting && !readySteadyGo.running
                 model: ListModel {
                     ListElement { text: "Bubble sort"; }
