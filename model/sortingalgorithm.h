@@ -9,6 +9,7 @@ class SortingAlgorithm
 {
 public:
     SortingAlgorithm(SortEngineWorker *worker);
+    virtual ~SortingAlgorithm() {}
 
     virtual void sort() = 0;
 
