@@ -12,6 +12,28 @@ Rectangle {
     property alias sorted: sortBoxModel.sorted
     property alias operationCount: sortBoxModel.operationCount
 
+    function sort() {
+        if (!sortBoxModel.sorted && !sortBoxModel.sorting)
+            sortBoxModel.sort()
+    }
+
+    function scramble() {
+        if (!sortBoxModel.sorting)
+            bars.model.scramble()
+    }
+
+    function setOrder(array) {
+        sortBoxModel.setOrder(array)
+    }
+
+    function setSortedFalse() {
+        sortBox.sorted = false
+    }
+
+    function algorithms() {
+        return sortBoxModel.algorithms()
+    }
+
     gradient: Gradient {
         GradientStop { id: gradientBegin; position: 0.0; color: "#FFFFE0" }
         GradientStop { id: gradientEnd; position: 1.0; color: "#FFFFF0" }
@@ -77,24 +99,6 @@ Rectangle {
             ColorAnimation { target: gradientBegin; properties: "color"; to: "#FFFFE0"; easing.type: Easing.OutCubic; duration: 500 }
             ColorAnimation { target: gradientEnd; properties: "color"; to: "#FFFFF0"; easing.type: Easing.OutCubic; duration: 500 }
         }
-    }
-
-    function sort() {
-        if (!sortBoxModel.sorted && !sortBoxModel.sorting)
-            sortBoxModel.sort()
-    }
-
-    function scramble() {
-        if (!sortBoxModel.sorting)
-            bars.model.scramble()
-    }
-
-    function setOrder(array) {
-        sortBoxModel.setOrder(array)
-    }
-
-    function setSortedFalse() {
-        sortBox.sorted = false
     }
 
     QtObject {

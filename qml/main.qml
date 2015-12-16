@@ -165,16 +165,7 @@ ApplicationWindow {
 
                 Layout.minimumWidth: 150
                 enabled: !internal.racing
-
-                model: ListModel {
-                    ListElement { text : "Bubble sort"; }
-                    ListElement { text : "Exchange sort"; }
-                    ListElement { text : "Selection sort"; }
-                    ListElement { text : "Insertion sort"; }
-                    ListElement { text : "Shell sort"; }
-                    ListElement { text : "Merge sort"; }
-                    ListElement { text : "Quick sort"; }
-                }
+                model: sortBoxModel.algorithms()
             }
         }
     }

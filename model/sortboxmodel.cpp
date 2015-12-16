@@ -160,59 +160,16 @@ void SortBoxModel::scramble()
 {
     m_sorted = false;
 
-    for (auto i(0); i < m_barHeights.count() * 2; ++i) {
-        auto index1 = rand() % m_barHeights.count();
-        auto index2 = rand() % m_barHeights.count();
+    auto order = randomOrder(m_barHeights.count());
 
-        while (index1 == index2)
-            index2 = rand() % m_barHeights.count();
-
-        m_barHeights.swap(index1, index2);
-    }
+    for (auto i(0); i < order.count(); ++i)
+        m_barHeights[i] = order[i].toFloat();
 
     emit sortedChanged();
     emit dataChanged(index(0), index(m_barHeights.count() - 1));
 }
 
-QVariantList SortBoxModel::randomOrder(int itemCount)
-{
-    auto heightRatioIncrease = (KLastBarHeightRatio - KFirstBarHeightRatio) / (itemCount - 1);
-    auto barHeightRatio = KFirstBarHeightRatio;
 
-    QVariantList list;
-
-    for (auto i(0); i < itemCount; ++i) {
-        list.append(barHeightRatio);
-        barHeightRatio += heightRatioIncrease;
-    }
-
-    for (auto i(0); i < itemCount * 2; ++i) {
-        auto index1 = rand() % list.count();
-        auto index2 = rand() % list.count();
-
-        while (index1 == index2)
-            index2 = rand() % list.count();
-
-        list.swap(index1, index2);
-    }
-
-    return list;
-}
-
-QVariantList SortBoxModel::reverseOrder(int itemCount)
-{
-    auto heightRatioIncrease = (KLastBarHeightRatio - KFirstBarHeightRatio) / (itemCount - 1);
-    auto barHeightRatio = KFirstBarHeightRatio;
-
-    QVariantList list;
-
-    for (auto i(0); i < itemCount; ++i) {
-        list.prepend(barHeightRatio);
-        barHeightRatio += heightRatioIncrease;
-    }
-
-    return list;
-}
 
 void SortBoxModel::setOrder(const QVariantList &list)
 {
@@ -274,6 +231,51 @@ void SortBoxModel::proceed()
 {
     m_engine->resume();
 
+}
+
+QVariantList SortBoxModel::randomOrder(int itemCount) const
+{
+    auto heightRatioIncrease = (KLastBarHeightRatio - KFirstBarHeightRatio) / (itemCount - 1);
+    auto barHeightRatio = KFirstBarHeightRatio;
+
+    QVariantList list;
+
+    for (auto i(0); i < itemCount; ++i) {
+        list.append(barHeightRatio);
+        barHeightRatio += heightRatioIncrease;
+    }
+
+    for (auto i(0); i < itemCount * 2; ++i) {
+        auto index1 = rand() % list.count();
+        auto index2 = rand() % list.count();
+
+        while (index1 == index2)
+            index2 = rand() % list.count();
+
+        list.swap(index1, index2);
+    }
+
+    return list;
+}
+
+QVariantList SortBoxModel::reverseOrder(int itemCount) const
+{
+    auto heightRatioIncrease = (KLastBarHeightRatio - KFirstBarHeightRatio) / (itemCount - 1);
+    auto barHeightRatio = KFirstBarHeightRatio;
+
+    QVariantList list;
+
+    for (auto i(0); i < itemCount; ++i) {
+        list.prepend(barHeightRatio);
+        barHeightRatio += heightRatioIncrease;
+    }
+
+    return list;
+}
+
+QStringList SortBoxModel::algorithms() const
+{
+    return QStringList {"Bubble sort", "Exchange sort", "Selection sort", "Insertion sort", "Shell sort", "Merge sort", "Quick sort"};
 }
 
 void SortBoxModel::repopulate()

@@ -61,10 +61,11 @@ public:
     Q_INVOKABLE void sort();
     Q_INVOKABLE void move(int from, int to);
     Q_INVOKABLE void scramble();
-    Q_INVOKABLE QVariantList randomOrder(int itemCount);
-    Q_INVOKABLE QVariantList reverseOrder(int itemCount);
     Q_INVOKABLE void setOrder(const QVariantList &list);
     Q_INVOKABLE void proceed();
+    Q_INVOKABLE QVariantList randomOrder(int itemCount) const;
+    Q_INVOKABLE QVariantList reverseOrder(int itemCount) const;
+    Q_INVOKABLE QStringList algorithms() const;
 
 signals:
     void updateReady();

@@ -79,15 +79,7 @@ Item {
                 currentIndex: root.sortingAlgorithm
                 onCurrentIndexChanged: setSortingAlgorithm(currentIndex)
                 enabled: !sortBox.sorting && !readySteadyGo.running
-                model: ListModel {
-                    ListElement { text: "Bubble sort"; }
-                    ListElement { text: "Exchange sort"; }
-                    ListElement { text: "Selection sort"; }
-                    ListElement { text: "Insertion sort"; }
-                    ListElement { text: "Shell sort"; }
-                    ListElement { text: "Merge sort"; }
-                    ListElement { text: "Quick sort"; }
-                }
+                model: sortBox.algorithms()
             }
 
             Item {
