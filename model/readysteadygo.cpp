@@ -28,8 +28,7 @@ void ReadySteadyGo::countDown(qint64 initTime)
     m_timerCallbacks = 0;
 
     auto timeDifference = QDateTime::currentMSecsSinceEpoch() - initTime;
-    auto startInterval = (KCountDownInterval - timeDifference) % 100;
-    startTimer(startInterval);
+    startTimer(timeDifference, Qt::PreciseTimer);
 }
 
 void ReadySteadyGo::timerEvent(QTimerEvent *event)
@@ -39,7 +38,7 @@ void ReadySteadyGo::timerEvent(QTimerEvent *event)
         emit init();
 
         killTimer(event->timerId());
-        startTimer(KCountDownInterval);
+        startTimer(KCountDownInterval, Qt::PreciseTimer);
         m_running = true;
 
         emit runningChanged();
