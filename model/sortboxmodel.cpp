@@ -123,20 +123,6 @@ int SortBoxModel::operationCount() const
     return m_operationCount;
 }
 
-int SortBoxModel::operationInterval() const
-{
-    return m_engine->operationInterval();
-}
-
-void SortBoxModel::setOperationInterval(int operationInterval)
-{
-    if (operationInterval != m_engine->operationInterval()) {
-        m_engine->setOperationInterval(operationInterval);
-
-        emit operationIntervalChanged();
-    }
-}
-
 void SortBoxModel::sort()
 {
     m_engine->setList(m_barHeights);

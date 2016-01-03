@@ -16,12 +16,9 @@ class SortEngineWorker : public QObject
 public:
     explicit SortEngineWorker();
 
-    void setThread(SortEngineWorker *thread);
     void setList(const QList<float> &list);
     int sortingAlgorithm();
     void setSortingAlgorithm(int sortingAlgorithm);
-    int operationInterval();
-    void setOperationInterval(int operationInterval);
     void moveToThread(SortEngine *sortEngine);
     Q_INVOKABLE void sort();
     Q_INVOKABLE void resume();

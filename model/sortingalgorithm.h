@@ -20,7 +20,6 @@ public:
     QList<float> m_list;
 
     int m_sortingAlgorithm;
-    int m_operationInterval;
 };
 
 #endif // SORTINGALGORITHM_H

@@ -18,7 +18,6 @@ class SortBoxModel : public QAbstractListModel
     Q_PROPERTY(bool sorting READ sorting NOTIFY sortingChanged)
     Q_PROPERTY(bool sorted READ sorted WRITE setSorted NOTIFY sortedChanged)
     Q_PROPERTY(int operationCount READ operationCount NOTIFY operationCountChanged)
-    Q_PROPERTY(int operationInterval READ operationInterval WRITE setOperationInterval NOTIFY operationIntervalChanged)
 
     Q_ENUMS(SortingAlgorithm)
 
@@ -52,8 +51,6 @@ public:
     bool sorted() const;
     void setSorted(bool sorted);
     int operationCount() const;
-    int operationInterval() const;
-    void setOperationInterval(int operationInterval);
     void swap(int index1, int index2);
     void replace(int itemIndex, float value);
     void listSorted();

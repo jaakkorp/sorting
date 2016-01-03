@@ -16,12 +16,9 @@ public:
 
     Q_INVOKABLE void wait();
     Q_INVOKABLE void resume();
-    Q_INVOKABLE void sleep(int operationInterval);
     void setList(const QList<float> &list);
     int sortingAlgorithm();
     void setSortingAlgorithm(int sortingAlgorithm);
-    int operationInterval();
-    void setOperationInterval(int operationInterval);
     void sort();
 
 signals:
@@ -39,7 +36,6 @@ private:
     QMutex m_lock;
     QWaitCondition m_waitCondition;
     SortEngineWorker *m_worker;
-    int m_operationInterval;
 };
 
 #endif // SORTENGINETHREAD_H

@@ -7,7 +7,6 @@ Rectangle {
 
     property int sortingAlgorithm
     property int barCount
-    property alias animationDuration: sortBoxModel.operationInterval
     property alias sorting: sortBoxModel.sorting
     property alias sorted: sortBoxModel.sorted
     property alias operationCount: sortBoxModel.operationCount
@@ -71,7 +70,7 @@ Rectangle {
                 height: barHeightRatio * root.height;
                 width: (root.width - (root.barCount - 1) * barRow.spacing) / root.barCount
                 y: root.height - height
-                animationDuration: root.animationDuration > 0 ? root.animationDuration : 200
+                animationDuration: 200
                 onMovingChanged: if (moving)
                                      internal.barMoveInitiated()
                                  else
@@ -84,7 +83,6 @@ Rectangle {
         id: sortBoxModel
         sortingAlgorithm: root.sortingAlgorithm
         size: root.barCount
-        operationInterval: 200
     }
 
     SequentialAnimation {
@@ -107,11 +105,11 @@ Rectangle {
         property int movingBarCount: 0
 
         function barMoveInitiated() {
-            movingBarCount++
+            ++movingBarCount
         }
 
         function barMoveFinished() {
-            movingBarCount--
+            --movingBarCount
             if (movingBarCount === 0) {
                 sortBoxModel.proceed()
             }

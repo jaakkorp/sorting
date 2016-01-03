@@ -5,7 +5,6 @@
 SortEngine::SortEngine(QObject *parent)
     : QThread(parent)
     , m_worker(new SortEngineWorker())
-    , m_operationInterval(200)
 {
     start();
     m_worker->moveToThread(this);
@@ -26,13 +25,7 @@ void SortEngine::wait()
 
 void SortEngine::resume()
 {
-    if (operationInterval() > 0)
-        QMetaObject::invokeMethod(this, "doResume");
-}
-
-void SortEngine::sleep(int operationInterval)
-{
-    msleep(operationInterval);
+    QMetaObject::invokeMethod(this, "doResume");
 }
 
 void SortEngine::setList(const QList<float> &list)
@@ -48,16 +41,6 @@ int SortEngine::sortingAlgorithm()
 void SortEngine::setSortingAlgorithm(int sortingAlgorithm)
 {
     m_worker->setSortingAlgorithm(sortingAlgorithm);
-}
-
-int SortEngine::operationInterval()
-{
-    return m_operationInterval;
-}
-
-void SortEngine::setOperationInterval(int operationInterval)
-{
-    m_operationInterval = operationInterval;
 }
 
 void SortEngine::sort()

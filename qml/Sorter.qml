@@ -12,7 +12,6 @@ Item {
     property alias selected: checkBox.checked
     property int result
     readonly property alias sortingAlgorithm: comboBox.currentIndex
-    property alias animationDuration: sortBox.animationDuration
     readonly property bool sorting: sortBox.sorting
     readonly property bool aboutToSort: readySteadyGo.running
     readonly property bool sorted: sortBox.sorted && !sortingDuration.running

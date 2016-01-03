@@ -4,7 +4,6 @@
 
 SortingAlgorithm::SortingAlgorithm(SortEngineWorker *worker)
     : m_worker(worker)
-    , m_operationInterval(0)
 {
 }
 

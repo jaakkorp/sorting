@@ -48,23 +48,14 @@ void SortEngineWorker::doSwap(int index1, int index2)
 {
     emit swap(index1, index2);
 
-    if (m_algorithm->m_operationInterval > 0) {
-        m_engine->sleep(m_algorithm->m_operationInterval);
-    }
-    else {
-        m_engine->wait();
-    }
+    m_engine->wait();
 }
 
 void SortEngineWorker::doReplace(int index, float value)
 {
     emit replace(index, value);
 
-    if (m_algorithm->m_operationInterval > 0) {
-        m_engine->sleep(m_algorithm->m_operationInterval);
-    } else {
-        m_engine->wait();
-    }
+    m_engine->wait();
 }
 
 int SortEngineWorker::sortingAlgorithm()
@@ -108,14 +99,4 @@ void SortEngineWorker::setSortingAlgorithm(int sortingAlgorithm)
     }
 
     m_algorithm->m_sortingAlgorithm = sortingAlgorithm;
-}
-
-int SortEngineWorker::operationInterval()
-{
-    return m_algorithm->m_operationInterval;
-}
-
-void SortEngineWorker::setOperationInterval(int operationInterval)
-{
-    m_algorithm->m_operationInterval = operationInterval;
 }
