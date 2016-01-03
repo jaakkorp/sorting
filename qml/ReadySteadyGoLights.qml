@@ -4,6 +4,22 @@ Item {
     id: root
     anchors.fill: parent
 
+    function init() {
+        initAnimation.start()
+    }
+
+    function ready() {
+        readyAnimation.start()
+    }
+
+    function steady() {
+        steadyAnimation.start()
+    }
+
+    function go() {
+        goAnimation.start()
+    }
+
     Rectangle {
         id: background
         anchors.fill: parent
@@ -81,21 +97,5 @@ Item {
                 NumberAnimation { target: background; properties: "opacity"; from: 0.3; to: 0.0; duration: 1000 }
             }
         }
-    }
-
-    function init() {
-        initAnimation.start()
-    }
-
-    function ready() {
-        readyAnimation.start()
-    }
-
-    function steady() {
-        steadyAnimation.start()
-    }
-
-    function go() {
-        goAnimation.start()
     }
 }
