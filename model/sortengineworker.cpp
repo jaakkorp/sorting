@@ -17,10 +17,10 @@ SortEngineWorker::SortEngineWorker()
 {
 }
 
-void SortEngineWorker::moveToThread(SortEngine *sortEngine)
+void SortEngineWorker::setSortEngine(SortEngine *sortEngine)
 {
     m_engine = sortEngine;
-    QObject::moveToThread(sortEngine);
+    moveToThread(m_engine);
 }
 
 void SortEngineWorker::sort()

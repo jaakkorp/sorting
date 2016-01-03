@@ -7,7 +7,7 @@ SortEngine::SortEngine(QObject *parent)
     , m_worker(new SortEngineWorker())
 {
     start();
-    m_worker->moveToThread(this);
+    m_worker->setSortEngine(this);
 
     connect(m_worker, &SortEngineWorker::swap, this, &SortEngine::swap);
     connect(m_worker, &SortEngineWorker::replace, this, &SortEngine::replace);

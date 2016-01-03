@@ -19,7 +19,7 @@ public:
     void setList(const QList<float> &list);
     int sortingAlgorithm();
     void setSortingAlgorithm(int sortingAlgorithm);
-    void moveToThread(SortEngine *sortEngine);
+    void setSortEngine(SortEngine *sortEngine);
     Q_INVOKABLE void sort();
     Q_INVOKABLE void resume();
 
