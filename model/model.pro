@@ -1,37 +1,3 @@
-#TEMPLATE = lib
-
-#TARGET = qmlsortboxmodelplugin
-#TARGETPATH = Qt/labs/sortboxmodel
-
-#CONFIG += qt plugin
-#QT += qml quick
-
-#HEADERS += sortboxmodel.h \
-#           sortenginethread.h \
-#           sortengine.h \
-#           sortengine_p.h \
-#           raceresults.h \
-#           readysteadygo.h \
-#           constants.h
-
-
-#SOURCES += sortboxmodel.cpp \
-#           sortenginethread.cpp \
-#           sortengine.cpp \
-#           sortengine_p.cpp \
-#           raceresults.cpp \
-#           readysteadygo.cpp \
-#           plugin.cpp
-
-
-#QTDIR_build:DESTDIR = $$QT_BUILD_TREE/imports/$$TARGETPATH
-#target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
-
-#qmldir.files += $$PWD/qmldir
-#qmldir.path +=  $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
-
-#INSTALLS += target qmldir
-
 TEMPLATE = lib
 CONFIG += plugin c++14
 QT += qml quick
@@ -69,7 +35,7 @@ SOURCES += sortboxmodel.cpp \
            algorithms/shellsort.cpp \
            algorithms/quicksort.cpp
 
-DESTPATH=$$[QML2_IMPORT_PATH]/Qt/labs/sortboxmodel
+DESTPATH=$$[QT_INSTALL_QML]/Qt/labs/sortboxmodel
 
 target.path=$$DESTPATH
 qmldir.files=$$PWD/qmldir
