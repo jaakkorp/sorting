@@ -26,7 +26,7 @@ protected:
 protected:
     SortEngineWorker *m_worker;
     QList<float> m_list;
-    int m_sortingAlgorithm;
+    Algorithm m_sortingAlgorithm;
 };
 
 #endif // SORTINGALGORITHM_H

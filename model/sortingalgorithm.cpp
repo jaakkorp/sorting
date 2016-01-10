@@ -4,7 +4,7 @@
 
 SortingAlgorithm::SortingAlgorithm(SortEngineWorker *worker)
     : m_worker(worker)
-    , m_sortingAlgorithm(KQuickSort)
+    , m_sortingAlgorithm(Algorithm::QuickSort)
 {
 }
 
