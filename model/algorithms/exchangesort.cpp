@@ -11,9 +11,9 @@ void ExchangeSort::sort()
     exchangeSort();
 }
 
-int ExchangeSort::sortingAlgorithm()
+Algorithm ExchangeSort::sortingAlgorithm()
 {
-    return KExchangeSort;
+    return Algorithm::ExchangeSort;
 }
 
 void ExchangeSort::exchangeSort()

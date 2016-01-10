@@ -11,9 +11,9 @@ void QuickSort::sort()
     quickSort(0, m_list.count() - 1);
 }
 
-int QuickSort::sortingAlgorithm()
+Algorithm QuickSort::sortingAlgorithm()
 {
-    return KQuickSort;
+    return Algorithm::QuickSort;
 }
 
 void QuickSort::quickSort(int left, int right)

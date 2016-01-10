@@ -4,6 +4,7 @@
 #include <QList>
 
 class SortEngineWorker;
+enum class Algorithm;
 
 class SortingAlgorithm
 {
@@ -14,7 +15,7 @@ public:
     virtual ~SortingAlgorithm() = default;
 
     virtual void sort() = 0;
-    virtual int sortingAlgorithm() = 0;
+    virtual Algorithm sortingAlgorithm() = 0;
 
     void setList(const QList<float> &list);
 

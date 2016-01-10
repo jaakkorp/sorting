@@ -9,7 +9,7 @@ public:
     explicit SelectionSort(SortEngineWorker *worker);
 
     void sort() override;
-    int sortingAlgorithm() override;
+    Algorithm sortingAlgorithm() override;
 
 private:
     void selectionSort();

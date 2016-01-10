@@ -65,15 +65,17 @@ int SortBoxModel::rowCount(const QModelIndex &/*parent*/) const
     return m_barHeights.count();
 }
 
-SortBoxModel::SortingAlgorithm SortBoxModel::sortingAlgorithm()
+int SortBoxModel::sortingAlgorithm()
 {
-    return toSortingEnum(m_engine->sortingAlgorithm());
+    return static_cast<int>(m_engine->sortingAlgorithm());
 }
 
-void SortBoxModel::setSortingAlgorithm(SortBoxModel::SortingAlgorithm sortingAlgorithm)
+void SortBoxModel::setSortingAlgorithm(int sortingAlgorithm)
 {
-    if (!sorting() && sortingAlgorithm != toSortingEnum(m_engine->sortingAlgorithm())) {
-        m_engine->setSortingAlgorithm(toSortingConstInt(sortingAlgorithm));
+    auto algorithm = static_cast<Algorithm>(sortingAlgorithm);
+
+    if (!sorting() && algorithm != m_engine->sortingAlgorithm()) {
+        m_engine->setSortingAlgorithm(algorithm);
         emit sortingAlgorithmChanged();
     }
 }
@@ -261,7 +263,15 @@ QVariantList SortBoxModel::reverseOrder(int itemCount) const
 
 QStringList SortBoxModel::algorithms() const
 {
-    return QStringList {"Bubble sort", "Exchange sort", "Selection sort", "Insertion sort", "Shell sort", "Merge sort", "Quick sort"};
+    return QStringList {
+        "Bubble sort",
+        "Exchange sort",
+        "Insertion sort",
+        "Merge sort",
+        "Selection sort",
+        "Shell sort",
+        "Quick sort"
+    };
 }
 
 void SortBoxModel::repopulate()
@@ -279,62 +289,4 @@ void SortBoxModel::repopulate()
     scramble();
 
     emit dataChanged(index(0), index(m_barHeights.count() - 1));
-}
-
-int SortBoxModel::toSortingConstInt(SortBoxModel::SortingAlgorithm sortingAlgorithm)
-{
-    switch (sortingAlgorithm) {
-    case SortBoxModel::BubbleSort:
-        return KBubbleSort;
-
-    case SortBoxModel::ExchangeSort:
-        return KExchangeSort;
-
-    case SortBoxModel::SelectionSort:
-        return KSelectionSort;
-
-    case SortBoxModel::InsertionSort:
-        return KInsertionSort;
-
-    case SortBoxModel::ShellSort:
-        return KShellSort;
-
-    case SortBoxModel::MergeSort:
-        return KMergeSort;
-
-    case SortBoxModel::QuickSort:
-        return KQuickSort;
-
-    default:
-        return -1;
-    }
-}
-
-SortBoxModel::SortingAlgorithm SortBoxModel::toSortingEnum(int sortingAlgorithm)
-{
-    switch (sortingAlgorithm) {
-    case KBubbleSort:
-        return SortBoxModel::BubbleSort;
-
-    case KExchangeSort:
-        return SortBoxModel::ExchangeSort;
-
-    case KSelectionSort:
-        return SortBoxModel::SelectionSort;
-
-    case KInsertionSort:
-        return SortBoxModel::InsertionSort;
-
-    case KShellSort:
-        return SortBoxModel::ShellSort;
-
-    case KMergeSort:
-        return SortBoxModel::MergeSort;
-
-    case KQuickSort:
-        return SortBoxModel::QuickSort;
-
-    default:
-        return SortBoxModel::Undefined;
-    }
 }

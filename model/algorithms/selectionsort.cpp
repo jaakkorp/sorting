@@ -11,9 +11,9 @@ void SelectionSort::sort()
     selectionSort();
 }
 
-int SelectionSort::sortingAlgorithm()
+Algorithm SelectionSort::sortingAlgorithm()
 {
-    return KSelectionSort;
+    return Algorithm::SelectionSort;
 }
 
 void SelectionSort::selectionSort()

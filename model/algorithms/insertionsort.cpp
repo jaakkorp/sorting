@@ -11,9 +11,9 @@ void InsertionSort::sort()
     insertionSort();
 }
 
-int InsertionSort::sortingAlgorithm()
+Algorithm InsertionSort::sortingAlgorithm()
 {
-    return KInsertionSort;
+    return Algorithm::InsertionSort;
 }
 
 void InsertionSort::insertionSort()

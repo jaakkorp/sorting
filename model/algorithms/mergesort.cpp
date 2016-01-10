@@ -11,9 +11,9 @@ void MergeSort::sort()
     mergeSort(0, m_list.count() - 1);
 }
 
-int MergeSort::sortingAlgorithm()
+Algorithm MergeSort::sortingAlgorithm()
 {
-    return KMergeSort;
+    return Algorithm::MergeSort;
 }
 
 void MergeSort::mergeSort(int p, int r)

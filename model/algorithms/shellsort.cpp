@@ -11,9 +11,9 @@ void ShellSort::sort()
     shellSort();
 }
 
-int ShellSort::sortingAlgorithm()
+Algorithm ShellSort::sortingAlgorithm()
 {
-    return KShellSort;
+    return Algorithm::ShellSort;
 }
 
 void ShellSort::shellSort()

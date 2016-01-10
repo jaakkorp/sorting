@@ -11,9 +11,9 @@ void BubbleSort::sort()
     bubbleSort();
 }
 
-int BubbleSort::sortingAlgorithm()
+Algorithm BubbleSort::sortingAlgorithm()
 {
-    return KBubbleSort;
+    return Algorithm::BubbleSort;
 }
 
 void BubbleSort::bubbleSort()

@@ -47,12 +47,12 @@ HEADERS += sortboxmodel.h \
            readysteadygo.h \
            constants.h \
            algorithms/bubblesort.h \
-           algorithms/quicksort.h \
            algorithms/exchangesort.h \
-           algorithms/selectionsort.h \
            algorithms/insertionsort.h \
            algorithms/mergesort.h \
-           algorithms/shellsort.h
+           algorithms/selectionsort.h \
+           algorithms/shellsort.h \
+           algorithms/quicksort.h
 
 SOURCES += sortboxmodel.cpp \
            sortengine.cpp \
@@ -62,12 +62,12 @@ SOURCES += sortboxmodel.cpp \
            readysteadygo.cpp \
            plugin.cpp \
            algorithms/bubblesort.cpp \
-           algorithms/quicksort.cpp \
            algorithms/exchangesort.cpp \
-           algorithms/selectionsort.cpp \
            algorithms/insertionsort.cpp \
            algorithms/mergesort.cpp \
-           algorithms/shellsort.cpp
+           algorithms/selectionsort.cpp \
+           algorithms/shellsort.cpp \
+           algorithms/quicksort.cpp
 
 DESTPATH=$$[QML2_IMPORT_PATH]/Qt/labs/sortboxmodel
 

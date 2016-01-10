@@ -6,6 +6,7 @@
 #include <QWaitCondition>
 
 class SortEngineWorker;
+enum class Algorithm;
 
 class SortEngine : public QThread
 {
@@ -17,8 +18,8 @@ public:
     Q_INVOKABLE void wait();
     Q_INVOKABLE void resume();
     void setList(const QList<float> &list);
-    int sortingAlgorithm();
-    void setSortingAlgorithm(int sortingAlgorithm);
+    Algorithm sortingAlgorithm();
+    void setSortingAlgorithm(Algorithm sortingAlgorithm);
     void sort();
 
 signals:

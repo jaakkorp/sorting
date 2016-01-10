@@ -33,12 +33,12 @@ void SortEngine::setList(const QList<float> &list)
     m_worker->setList(list);
 }
 
-int SortEngine::sortingAlgorithm()
+Algorithm SortEngine::sortingAlgorithm()
 {
     return m_worker->sortingAlgorithm();
 }
 
-void SortEngine::setSortingAlgorithm(int sortingAlgorithm)
+void SortEngine::setSortingAlgorithm(Algorithm sortingAlgorithm)
 {
     m_worker->setSortingAlgorithm(sortingAlgorithm);
 }

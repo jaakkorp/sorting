@@ -10,7 +10,7 @@ public:
     explicit MergeSort(SortEngineWorker *worker);
 
     void sort() override;
-    int sortingAlgorithm() override;
+    Algorithm sortingAlgorithm() override;
 
 private:
     void mergeSort(int p, int r);

@@ -8,6 +8,7 @@
 
 class SortEngine;
 class SortingAlgorithm;
+enum class Algorithm;
 
 class SortEngineWorker : public QObject
 {
@@ -17,8 +18,8 @@ public:
     explicit SortEngineWorker();
 
     void setList(const QList<float> &list);
-    int sortingAlgorithm();
-    void setSortingAlgorithm(int sortingAlgorithm);
+    Algorithm sortingAlgorithm();
+    void setSortingAlgorithm(Algorithm sortingAlgorithm);
     void setSortEngine(SortEngine *sortEngine);
     Q_INVOKABLE void sort();
     Q_INVOKABLE void resume();

@@ -10,7 +10,7 @@ public:
     explicit QuickSort(SortEngineWorker *worker);
 
     void sort() override;
-    int sortingAlgorithm() override;
+    Algorithm sortingAlgorithm() override;
 
 private:
     void quickSort(int left, int right);

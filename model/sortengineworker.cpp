@@ -59,39 +59,39 @@ void SortEngineWorker::doReplace(int index, float value)
     m_engine->wait();
 }
 
-int SortEngineWorker::sortingAlgorithm()
+Algorithm SortEngineWorker::sortingAlgorithm()
 {
     return m_algorithm->sortingAlgorithm();
 }
 
-void SortEngineWorker::setSortingAlgorithm(int sortingAlgorithm)
+void SortEngineWorker::setSortingAlgorithm(Algorithm sortingAlgorithm)
 {
     switch (sortingAlgorithm) {
-    case KBubbleSort:
+    case Algorithm::BubbleSort:
         m_algorithm.reset(new BubbleSort(this));
         break;
 
-    case KExchangeSort:
+    case Algorithm::ExchangeSort:
         m_algorithm.reset(new ExchangeSort(this));
         break;
 
-    case KSelectionSort:
-        m_algorithm.reset(new SelectionSort(this));
-        break;
-
-    case KInsertionSort:
+    case Algorithm::InsertionSort:
         m_algorithm.reset(new InsertionSort(this));
         break;
 
-    case KShellSort:
-        m_algorithm.reset(new ShellSort(this));
-        break;
-
-    case KMergeSort:
+    case Algorithm::MergeSort:
         m_algorithm.reset(new MergeSort(this));
         break;
 
-    case KQuickSort:
+    case Algorithm::SelectionSort:
+        m_algorithm.reset(new SelectionSort(this));
+        break;
+
+    case Algorithm::ShellSort:
+        m_algorithm.reset(new ShellSort(this));
+        break;
+
+    case Algorithm::QuickSort:
         m_algorithm.reset(new QuickSort(this));
         break;
 
