@@ -4,7 +4,7 @@ TEMPLATE = app
 TARGET = ../sorting
 
 CONFIG += qt c++14
-QT += quick #widgets
+QT += quick
 
 SOURCES += main.cpp
 
@@ -13,7 +13,5 @@ RESOURCES += \
 
 target.path = .
 INSTALLS += target
-
-#LIBS += -L../model lmodel
 
 
