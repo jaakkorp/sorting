@@ -8,7 +8,8 @@ class BubbleSort : public SortingAlgorithm
 public:
     explicit BubbleSort(SortEngineWorker *worker);
 
-    virtual void sort();
+    void sort() override;
+    int sortingAlgorithm() override;
 
 private:
     void bubbleSort();

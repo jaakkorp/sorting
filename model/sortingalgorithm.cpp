@@ -4,7 +4,13 @@
 
 SortingAlgorithm::SortingAlgorithm(SortEngineWorker *worker)
     : m_worker(worker)
+    , m_sortingAlgorithm(KQuickSort)
 {
+}
+
+void SortingAlgorithm::setList(const QList<float> &list)
+{
+    m_list = list;
 }
 
 void SortingAlgorithm::swap(int index1, int index2)

@@ -9,7 +9,8 @@ class QuickSort : public SortingAlgorithm
 public:
     explicit QuickSort(SortEngineWorker *worker);
 
-    virtual void sort();
+    void sort() override;
+    int sortingAlgorithm() override;
 
 private:
     void quickSort(int left, int right);

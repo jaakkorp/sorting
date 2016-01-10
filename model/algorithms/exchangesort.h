@@ -8,7 +8,8 @@ class ExchangeSort : public SortingAlgorithm
 public:
     explicit ExchangeSort(SortEngineWorker *worker);
 
-    virtual void sort();
+    void sort() override;
+    int sortingAlgorithm() override;
 
 private:
     void exchangeSort();

@@ -13,6 +13,7 @@
 #include <QDebug>
 
 SortEngineWorker::SortEngineWorker()
+  // std::make_unique not yet available.
   : m_algorithm(new QuickSort(this))
 {
 }
@@ -36,7 +37,7 @@ void SortEngineWorker::sort()
 
 void SortEngineWorker::setList(const QList<float> &list)
 {
-    m_algorithm->m_list = list;
+    m_algorithm->setList(list);
 }
 
 void SortEngineWorker::resume()
@@ -60,7 +61,7 @@ void SortEngineWorker::doReplace(int index, float value)
 
 int SortEngineWorker::sortingAlgorithm()
 {
-    return m_algorithm->m_sortingAlgorithm;
+    return m_algorithm->sortingAlgorithm();
 }
 
 void SortEngineWorker::setSortingAlgorithm(int sortingAlgorithm)
@@ -97,6 +98,4 @@ void SortEngineWorker::setSortingAlgorithm(int sortingAlgorithm)
     default:
         break;
     }
-
-    m_algorithm->m_sortingAlgorithm = sortingAlgorithm;
 }

@@ -1,4 +1,5 @@
 #include "mergesort.h"
+#include "constants.h"
 
 MergeSort::MergeSort(SortEngineWorker *worker)
     : SortingAlgorithm(worker)
@@ -8,6 +9,11 @@ MergeSort::MergeSort(SortEngineWorker *worker)
 void MergeSort::sort()
 {
     mergeSort(0, m_list.count() - 1);
+}
+
+int MergeSort::sortingAlgorithm()
+{
+    return KMergeSort;
 }
 
 void MergeSort::mergeSort(int p, int r)

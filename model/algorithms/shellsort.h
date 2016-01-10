@@ -8,7 +8,8 @@ class ShellSort : public SortingAlgorithm
 public:
     explicit ShellSort(SortEngineWorker *worker);
 
-    virtual void sort();
+    void sort() override;
+    int sortingAlgorithm() override;
 
 private:
     void shellSort();

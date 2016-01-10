@@ -1,4 +1,5 @@
 #include "bubblesort.h"
+#include "constants.h"
 
 BubbleSort::BubbleSort(SortEngineWorker *worker)
     : SortingAlgorithm(worker)
@@ -8,6 +9,11 @@ BubbleSort::BubbleSort(SortEngineWorker *worker)
 void BubbleSort::sort()
 {
     bubbleSort();
+}
+
+int BubbleSort::sortingAlgorithm()
+{
+    return KBubbleSort;
 }
 
 void BubbleSort::bubbleSort()

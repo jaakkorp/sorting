@@ -1,4 +1,5 @@
 #include "insertionsort.h"
+#include "constants.h"
 
 InsertionSort::InsertionSort(SortEngineWorker *worker)
     : SortingAlgorithm(worker)
@@ -8,6 +9,11 @@ InsertionSort::InsertionSort(SortEngineWorker *worker)
 void InsertionSort::sort()
 {
     insertionSort();
+}
+
+int InsertionSort::sortingAlgorithm()
+{
+    return KInsertionSort;
 }
 
 void InsertionSort::insertionSort()

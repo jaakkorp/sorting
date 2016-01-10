@@ -1,4 +1,5 @@
 #include "exchangesort.h"
+#include "constants.h"
 
 ExchangeSort::ExchangeSort(SortEngineWorker *worker)
     : SortingAlgorithm(worker)
@@ -8,6 +9,11 @@ ExchangeSort::ExchangeSort(SortEngineWorker *worker)
 void ExchangeSort::sort()
 {
     exchangeSort();
+}
+
+int ExchangeSort::sortingAlgorithm()
+{
+    return KExchangeSort;
 }
 
 void ExchangeSort::exchangeSort()

@@ -8,7 +8,8 @@ class InsertionSort : public SortingAlgorithm
 public:
     explicit InsertionSort(SortEngineWorker *worker);
 
-    virtual void sort();
+    void sort() override;
+    int sortingAlgorithm() override;
 
 private:
     void insertionSort();

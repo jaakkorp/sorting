@@ -1,4 +1,5 @@
 #include "quicksort.h"
+#include "constants.h"
 
 QuickSort::QuickSort(SortEngineWorker *worker)
     : SortingAlgorithm(worker)
@@ -8,6 +9,11 @@ QuickSort::QuickSort(SortEngineWorker *worker)
 void QuickSort::sort()
 {
     quickSort(0, m_list.count() - 1);
+}
+
+int QuickSort::sortingAlgorithm()
+{
+    return KQuickSort;
 }
 
 void QuickSort::quickSort(int left, int right)

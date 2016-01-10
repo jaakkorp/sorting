@@ -9,7 +9,8 @@ class MergeSort : public SortingAlgorithm
 public:
     explicit MergeSort(SortEngineWorker *worker);
 
-    virtual void sort();
+    void sort() override;
+    int sortingAlgorithm() override;
 
 private:
     void mergeSort(int p, int r);

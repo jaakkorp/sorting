@@ -1,4 +1,5 @@
 #include "shellsort.h"
+#include "constants.h"
 
 ShellSort::ShellSort(SortEngineWorker *worker)
     : SortingAlgorithm(worker)
@@ -8,6 +9,11 @@ ShellSort::ShellSort(SortEngineWorker *worker)
 void ShellSort::sort()
 {
     shellSort();
+}
+
+int ShellSort::sortingAlgorithm()
+{
+    return KShellSort;
 }
 
 void ShellSort::shellSort()

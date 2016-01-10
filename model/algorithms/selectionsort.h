@@ -8,7 +8,8 @@ class SelectionSort : public SortingAlgorithm
 public:
     explicit SelectionSort(SortEngineWorker *worker);
 
-    virtual void sort();
+    void sort() override;
+    int sortingAlgorithm() override;
 
 private:
     void selectionSort();

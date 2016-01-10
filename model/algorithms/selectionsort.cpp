@@ -1,4 +1,5 @@
 #include "selectionsort.h"
+#include "constants.h"
 
 SelectionSort::SelectionSort(SortEngineWorker *worker)
     : SortingAlgorithm(worker)
@@ -8,6 +9,11 @@ SelectionSort::SelectionSort(SortEngineWorker *worker)
 void SelectionSort::sort()
 {
     selectionSort();
+}
+
+int SelectionSort::sortingAlgorithm()
+{
+    return KSelectionSort;
 }
 
 void SelectionSort::selectionSort()
