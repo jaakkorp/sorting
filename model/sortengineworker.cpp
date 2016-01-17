@@ -24,20 +24,15 @@ void SortEngineWorker::setSortEngine(SortEngine *sortEngine)
     moveToThread(m_engine);
 }
 
-void SortEngineWorker::sort()
+void SortEngineWorker::sort(const QList<float> &list)
 {
     if (!m_engine) {
         qWarning() << Q_FUNC_INFO << " - SortEngine not set for SortEngineWorker. Unable to sort.";
         return;
     }
 
-    m_algorithm->sort();
+    m_algorithm->sort(list);
     emit sorted();
-}
-
-void SortEngineWorker::setList(const QList<float> &list)
-{
-    m_algorithm->setList(list);
 }
 
 void SortEngineWorker::resume()

@@ -17,10 +17,9 @@ public:
 
     Q_INVOKABLE void wait();
     Q_INVOKABLE void resume();
-    void setList(const QList<float> &list);
     Algorithm sortingAlgorithm();
     void setSortingAlgorithm(Algorithm sortingAlgorithm);
-    void sort();
+    void sort(const QList<float> &list);
 
 signals:
     void swap(int index1, int index2);

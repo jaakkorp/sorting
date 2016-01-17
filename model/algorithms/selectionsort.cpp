@@ -6,8 +6,10 @@ SelectionSort::SelectionSort(SortEngineWorker *worker)
 {
 }
 
-void SelectionSort::sort()
+void SelectionSort::sort(const QList<float> &list)
 {
+    m_list = list;
+
     selectionSort();
 }
 

@@ -6,8 +6,10 @@ InsertionSort::InsertionSort(SortEngineWorker *worker)
 {
 }
 
-void InsertionSort::sort()
+void InsertionSort::sort(const QList<float> &list)
 {
+    m_list = list;
+
     insertionSort();
 }
 

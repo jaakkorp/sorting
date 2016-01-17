@@ -127,8 +127,7 @@ int SortBoxModel::operationCount() const
 
 void SortBoxModel::sort()
 {
-    m_engine->setList(m_barHeights);
-    m_engine->sort();
+    m_engine->sort(m_barHeights);
     m_sorting = true;
     m_operationCount = 0;
 

@@ -8,7 +8,7 @@ class SelectionSort : public SortingAlgorithm
 public:
     explicit SelectionSort(SortEngineWorker *worker);
 
-    void sort() override;
+    void sort(const QList<float> &list) override;
     Algorithm sortingAlgorithm() override;
 
 private:

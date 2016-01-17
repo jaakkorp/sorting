@@ -8,7 +8,7 @@ class ExchangeSort : public SortingAlgorithm
 public:
     explicit ExchangeSort(SortEngineWorker *worker);
 
-    void sort() override;
+    void sort(const QList<float> &list) override;
     Algorithm sortingAlgorithm() override;
 
 private:

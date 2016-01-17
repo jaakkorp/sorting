@@ -8,7 +8,7 @@ class InsertionSort : public SortingAlgorithm
 public:
     explicit InsertionSort(SortEngineWorker *worker);
 
-    void sort() override;
+    void sort(const QList<float> &list) override;
     Algorithm sortingAlgorithm() override;
 
 private:

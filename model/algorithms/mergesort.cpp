@@ -6,8 +6,10 @@ MergeSort::MergeSort(SortEngineWorker *worker)
 {
 }
 
-void MergeSort::sort()
+void MergeSort::sort(const QList<float> &list)
 {
+    m_list = list;
+
     mergeSort(0, m_list.count() - 1);
 }
 

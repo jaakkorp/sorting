@@ -8,7 +8,7 @@ class ShellSort : public SortingAlgorithm
 public:
     explicit ShellSort(SortEngineWorker *worker);
 
-    void sort() override;
+    void sort(const QList<float> &list) override;
     Algorithm sortingAlgorithm() override;
 
 private:

@@ -8,11 +8,6 @@ SortingAlgorithm::SortingAlgorithm(SortEngineWorker *worker)
 {
 }
 
-void SortingAlgorithm::setList(const QList<float> &list)
-{
-    m_list = list;
-}
-
 void SortingAlgorithm::swap(int index1, int index2)
 {
     m_list.swap(index1, index2);

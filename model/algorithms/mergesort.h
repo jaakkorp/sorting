@@ -9,7 +9,7 @@ class MergeSort : public SortingAlgorithm
 public:
     explicit MergeSort(SortEngineWorker *worker);
 
-    void sort() override;
+    void sort(const QList<float> &list) override;
     Algorithm sortingAlgorithm() override;
 
 private:

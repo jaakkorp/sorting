@@ -6,8 +6,10 @@ ExchangeSort::ExchangeSort(SortEngineWorker *worker)
 {
 }
 
-void ExchangeSort::sort()
+void ExchangeSort::sort(const QList<float> &list)
 {
+    m_list = list;
+
     exchangeSort();
 }
 

@@ -14,10 +14,8 @@ public:
     // of this application. Therefore skipping "rule of five" guidelines.
     virtual ~SortingAlgorithm() = default;
 
-    virtual void sort() = 0;
+    virtual void sort(const QList<float> &list) = 0;
     virtual Algorithm sortingAlgorithm() = 0;
-
-    void setList(const QList<float> &list);
 
 protected:
     void swap(int index1, int index2);

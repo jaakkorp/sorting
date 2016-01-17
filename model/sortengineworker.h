@@ -17,11 +17,10 @@ class SortEngineWorker : public QObject
 public:
     explicit SortEngineWorker();
 
-    void setList(const QList<float> &list);
     Algorithm sortingAlgorithm();
     void setSortingAlgorithm(Algorithm sortingAlgorithm);
     void setSortEngine(SortEngine *sortEngine);
-    Q_INVOKABLE void sort();
+    Q_INVOKABLE void sort(const QList<float> &list);
     Q_INVOKABLE void resume();
 
 signals:

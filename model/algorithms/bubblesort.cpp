@@ -6,8 +6,10 @@ BubbleSort::BubbleSort(SortEngineWorker *worker)
 {
 }
 
-void BubbleSort::sort()
+void BubbleSort::sort(const QList<float> &list)
 {
+    m_list = list;
+
     bubbleSort();
 }
 

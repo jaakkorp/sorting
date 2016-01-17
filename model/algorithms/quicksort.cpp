@@ -6,8 +6,10 @@ QuickSort::QuickSort(SortEngineWorker *worker)
 {
 }
 
-void QuickSort::sort()
+void QuickSort::sort(const QList<float> &list)
 {
+    m_list = list;
+
     quickSort(0, m_list.count() - 1);
 }
 

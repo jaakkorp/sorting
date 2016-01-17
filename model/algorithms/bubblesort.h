@@ -8,7 +8,7 @@ class BubbleSort : public SortingAlgorithm
 public:
     explicit BubbleSort(SortEngineWorker *worker);
 
-    void sort() override;
+    void sort(const QList<float> &list) override;
     Algorithm sortingAlgorithm() override;
 
 private:

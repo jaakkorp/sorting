@@ -6,6 +6,8 @@ SortEngine::SortEngine(QObject *parent)
     : QThread(parent)
     , m_worker(new SortEngineWorker())
 {
+    qRegisterMetaType<QList<float>>("QList<float>");
+
     start();
     m_worker->setSortEngine(this);
 
@@ -28,11 +30,6 @@ void SortEngine::resume()
     QMetaObject::invokeMethod(this, "doResume");
 }
 
-void SortEngine::setList(const QList<float> &list)
-{
-    m_worker->setList(list);
-}
-
 Algorithm SortEngine::sortingAlgorithm()
 {
     return m_worker->sortingAlgorithm();
@@ -43,9 +40,9 @@ void SortEngine::setSortingAlgorithm(Algorithm sortingAlgorithm)
     m_worker->setSortingAlgorithm(sortingAlgorithm);
 }
 
-void SortEngine::sort()
+void SortEngine::sort(const QList<float> &list)
 {
-    QMetaObject::invokeMethod(m_worker, "sort");
+    QMetaObject::invokeMethod(m_worker, "sort", Qt::AutoConnection, Q_ARG(QList<float>, list));
 }
 
 void SortEngine::run()

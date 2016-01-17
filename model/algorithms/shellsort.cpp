@@ -6,8 +6,10 @@ ShellSort::ShellSort(SortEngineWorker *worker)
 {
 }
 
-void ShellSort::sort()
+void ShellSort::sort(const QList<float> &list)
 {
+    m_list = list;
+
     shellSort();
 }
 
