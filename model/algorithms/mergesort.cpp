@@ -49,7 +49,12 @@ void MergeSort::merge(int p, int r)
     while (i3 <= r)
         temp[i1++] = m_list[i3++];
 
-    for (auto i(p); i <= r; ++i)
-        replace(i, temp[i-p]);
+    for (auto i(p); i <= r; ++i) {
+        // TODO: check sorting logic. Right now we are asked to replace a
+        // value with the same value and the logic depends on values changing
+        // (SortBox.qml: onMovingChanged in Bar delegate).
+        if (m_list[i] != temp[i-p])
+            replace(i, temp[i-p]);
+    }
 }
 

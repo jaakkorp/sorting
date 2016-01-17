@@ -157,8 +157,6 @@ void SortBoxModel::scramble()
     emit dataChanged(index(0), index(m_barHeights.count() - 1));
 }
 
-
-
 void SortBoxModel::setOrder(const QVariantList &list)
 {
     if (list.count() < 1 || sorting())
@@ -190,15 +188,6 @@ void SortBoxModel::swap(int index1, int index2)
 
 void SortBoxModel::replace(int itemIndex, float value)
 {
-    // TODO: check marge sort algorithm. Right now we are asked to replace
-    // a value with the same value and the logic depends on values changing
-    // (SortBox.qml: onMovingChanged in Bar delegate).
-    auto old = m_barHeights[itemIndex];
-    if (value == old) {
-        proceed();
-        return;
-    }
-
     m_barHeights.replace(itemIndex, value);
     ++m_operationCount;
 
