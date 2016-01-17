@@ -8,8 +8,8 @@
 #include <QMetaObject>
 #include <QDebug>
 
-const float KFirstBarHeightRatio = 0.05f;
-const float KLastBarHeightRatio = 0.95f;
+const auto KFirstBarHeightRatio = 0.05f;
+const auto KLastBarHeightRatio = 0.95f;
 
 SortBoxModel::SortBoxModel(QObject *parent)
     : QAbstractListModel(parent)
