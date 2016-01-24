@@ -15,7 +15,7 @@ class SortBoxModelPlugin : public QQmlExtensionPlugin
 public:
     virtual void registerTypes(const char *uri)
     {
-        Q_ASSERT(QLatin1String(uri) == QLatin1String("Qt.labs.sortboxmodel"));
+        Q_ASSERT(QLatin1String(uri) == QLatin1String("Qt.labs.sortingmodel"));
 
         qmlRegisterType<SortBoxModel>(uri, 1, 0, "SortBoxModel");
         qmlRegisterType<RaceResults>(uri, 1, 0, "RaceResults");

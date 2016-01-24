@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import Qt.labs.sortboxmodel 1.0
+import Qt.labs.sortingmodel 1.0
 import QtQuick.Controls 1.4
 
 Rectangle {

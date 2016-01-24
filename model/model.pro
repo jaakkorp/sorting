@@ -2,8 +2,8 @@ TEMPLATE = lib
 CONFIG += plugin c++14
 QT += qml quick
 
-DESTDIR = ../sortboxmodel
-TARGET = $$qtLibraryTarget(qmlsortboxmodelplugin)
+DESTDIR = ../sortingmodel
+TARGET = $$qtLibraryTarget(qmlsortingmodelplugin)
 
 HEADERS += sortboxmodel.h \
            sortengine.h \
@@ -35,7 +35,7 @@ SOURCES += sortboxmodel.cpp \
            algorithms/shellsort.cpp \
            algorithms/quicksort.cpp
 
-DESTPATH=$$[QT_INSTALL_QML]/Qt/labs/sortboxmodel
+DESTPATH=$$[QT_INSTALL_QML]/Qt/labs/sortingmodel
 
 target.path=$$DESTPATH
 qmldir.files=$$PWD/qmldir
