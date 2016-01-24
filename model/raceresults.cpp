@@ -17,7 +17,7 @@ void RaceResults::addRaceTime(int raceTime)
     auto index = m_times.count() - 1;
 
     while (index >= 0 && m_times[index] > raceTime)
-            --index;
+        --index;
 
     m_times.insert(index + 1, raceTime);
 }

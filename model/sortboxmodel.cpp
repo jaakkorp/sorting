@@ -65,12 +65,12 @@ int SortBoxModel::rowCount(const QModelIndex &/*parent*/) const
     return m_barHeights.count();
 }
 
-int SortBoxModel::sortingAlgorithm()
+SortBoxModel::SortingAlgorithm SortBoxModel::sortingAlgorithm()
 {
-    return static_cast<int>(m_engine->sortingAlgorithm());
+    return static_cast<SortingAlgorithm>(m_engine->sortingAlgorithm());
 }
 
-void SortBoxModel::setSortingAlgorithm(int sortingAlgorithm)
+void SortBoxModel::setSortingAlgorithm(SortingAlgorithm sortingAlgorithm)
 {
     auto algorithm = static_cast<Algorithm>(sortingAlgorithm);
 

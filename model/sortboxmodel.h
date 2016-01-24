@@ -13,7 +13,7 @@ class SortBoxModel : public QAbstractListModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(int sortingAlgorithm READ sortingAlgorithm WRITE setSortingAlgorithm NOTIFY sortingAlgorithmChanged)
+    Q_PROPERTY(SortingAlgorithm sortingAlgorithm READ sortingAlgorithm WRITE setSortingAlgorithm NOTIFY sortingAlgorithmChanged)
     Q_PROPERTY(int size READ size WRITE setSize NOTIFY sizeChanged)
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(bool sorting READ sorting NOTIFY sortingChanged)
@@ -25,7 +25,8 @@ public:
         BarHeightRatioRole = Qt::UserRole + 1
     };
 
-    enum SortingAlgorithm {
+    // For exposing to QML.
+    enum class SortingAlgorithm {
         Undefined = static_cast<int>(Algorithm::Undefined),
         BubbleSort = static_cast<int>(Algorithm::BubbleSort),
         ExchangeSort = static_cast<int>(Algorithm::ExchangeSort),
@@ -36,16 +37,15 @@ public:
         QuickSort = static_cast<int>(Algorithm::QuickSort)
     };
 
-    // Can't expose scoped enums to QML.
     Q_ENUM(SortingAlgorithm)
 
     SortBoxModel(QObject *parent = 0);
 
-    QVariant data(const QModelIndex& index, int role) const;
+    QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent) const;
 
-    int sortingAlgorithm();
-    void setSortingAlgorithm(int sortingAlgorithm);
+    SortingAlgorithm sortingAlgorithm();
+    void setSortingAlgorithm(SortingAlgorithm sortingAlgorithm);
     int size() const;
     void setSize(int size);
     int count() const;
