@@ -1,6 +1,8 @@
 #include "mergesort.h"
 #include "constants.h"
 
+#include <QVector>
+
 MergeSort::MergeSort(SortEngineWorker *worker)
     : SortingAlgorithm(worker)
 {
@@ -20,43 +22,42 @@ Algorithm MergeSort::sortingAlgorithm()
 
 void MergeSort::mergeSort(int p, int r)
 {
-    if (p < r) {
-        auto mid = (p + r) / 2;
-        mergeSort(p, mid);
-        mergeSort(mid + 1, r);
-        merge(p, r);
-    }
+    if (p >= r)
+        return;
+
+    auto mid = middle(p, r);
+    mergeSort(p, mid);
+    mergeSort(mid + 1, r);
+    merge(p, r);
 }
 
 void MergeSort::merge(int p, int r)
 {
-    auto mid = (p + r) / 2;
+    auto mid = middle(p, r);
     auto i1 = 0;
     auto i2 = p;
     auto i3 = mid + 1;
 
-    QList<float> temp;
-    for (auto i(0); i < r - p + 1; ++i)
-        temp.append(0.0);
+    QVector<float> merged(r - p + 1);
 
-    while (i2 <= mid && i3 <= r)
-        if (m_list[i2] < m_list[i3])
-            temp[i1++] = m_list[i2++];
-        else
-            temp[i1++] = m_list[i3++];
+    while (i2 <= mid && i3 <= r) {
+        if (m_list[i2] < m_list[i3]) {
+            merged[i1++] = m_list[i2++];
+        }
+        else {
+            merged[i1++] = m_list[i3++];
+        }
+    }
 
     while (i2 <= mid)
-        temp[i1++] = m_list[i2++];
+        merged[i1++] = m_list[i2++];
 
     while (i3 <= r)
-        temp[i1++] = m_list[i3++];
+        merged[i1++] = m_list[i3++];
 
     for (auto i(p); i <= r; ++i) {
-        // TODO: check sorting logic. Right now we are asked to replace a
-        // value with the same value and the logic depends on values changing
-        // (SortBox.qml: onMovingChanged in Bar delegate).
-        if (m_list[i] != temp[i-p])
-            replace(i, temp[i-p]);
+        if (m_list[i] != merged[i-p])
+            replace(i, merged[i-p]);
     }
 }
 

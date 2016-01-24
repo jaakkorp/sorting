@@ -15,6 +15,7 @@ public:
 private:
     void mergeSort(int p, int r);
     void merge(int p, int r);
+    inline int middle(int p, int r) { return (p + r) / 2; }
 };
 
 #endif // MERGESORT_H
