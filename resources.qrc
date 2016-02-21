@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/Bar.qml</file>
-        <file>qml/CheckBox.qml</file>
         <file>qml/CloseButton.qml</file>
         <file>qml/main.qml</file>
         <file>qml/ReadySteadyGoLights.qml</file>

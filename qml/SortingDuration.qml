@@ -1,20 +1,3 @@
-/** This file is part of the Meltemi SDK
-
-Copyright © 2012 Nokia Corporation and/or its subsidiary(-ies).
-All rights reserved.
-
-Name:  Meltemi SDK
-Version:  1.0
-Contact:  mt-eap-support@nokia.com
-
-This software, including documentation, is protected by copyright
-controlled by Nokia Corporation.  All rights reserved.  Copying,
-including reproducing, storing, adapting or translating, any or all
-of this material requires prior written consent of Nokia Corporation.
-This material also contains confidential information which may
-not be disclosed to others without the prior written consent
-of Nokia.*/
-
 import QtQuick 2.5
 
 Rectangle {
@@ -55,13 +38,12 @@ Rectangle {
 
         function stop() {
             timer.stop()
-            // Calculate the exact time from start to finish excluding the time spent paused
+            // Calculate the exact time from start to finish excluding the time spent paused.
             milliseconds = new Date().getTime() - startTime.getTime() - timeSpentPaused
             running = false
         }
 
-        function msecondsToTime(msecs)
-        {
+        function msecondsToTime(msecs) {
             var minutes = Math.floor(msecs / (1000 * 60));
             var seconds = Math.floor((msecs / 1000) % 60);
             var mseconds = Math.ceil(msecs % 1000);

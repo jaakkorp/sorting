@@ -1,7 +1,6 @@
 #ifndef MERGESORT_H
 #define MERGESORT_H
 
-
 #include "sortingalgorithm.h"
 
 class MergeSort : public SortingAlgorithm

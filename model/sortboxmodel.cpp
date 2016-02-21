@@ -1,5 +1,4 @@
 #include "sortboxmodel.h"
-#include "sortenginefactory.h"
 #include "sortengine.h"
 #include "sortengine.h"
 #include "constants.h"

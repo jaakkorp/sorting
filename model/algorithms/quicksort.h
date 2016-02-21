@@ -3,7 +3,6 @@
 
 #include "sortingalgorithm.h"
 
-
 class QuickSort : public SortingAlgorithm
 {
 public:
